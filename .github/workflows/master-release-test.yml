@@ -23,13 +23,12 @@ jobs:
     
     - name: Pack
       working-directory: CoreFrameworkBase
-      run: dotnet pack --configuration Release
-            
+      run: dotnet pack --configuration Release -p:VersionSuffix=dev
+      
     - name: Find file
       id: nupkgvar
       working-directory: CoreFrameworkBase/bin/Release
-      #set develop name!
-      run: files=( *.nupkg) && echo ::set-output name=filename::$(echo "${files[0]%.*}-dev.${files[0]##*.}")
+      run: files=( *.nupkg) && echo ::set-output name=filename::$(echo "${files[0]}")
       
     - name: Upload nupkg to artifacts
       uses: actions/upload-artifact@v1.0.0
