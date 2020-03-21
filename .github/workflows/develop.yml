@@ -29,6 +29,7 @@ jobs:
       id: nupkgvar
       working-directory: CoreFrameworkBase/bin/Release
       run: |
+        ls -lha |
         files=( *.nupkg) |
         echo "${files[0]}" |
         echo ::set-output name=filename::$(echo "${files[0]}")
