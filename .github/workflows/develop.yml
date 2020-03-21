@@ -7,7 +7,7 @@ on:
 
 jobs:
   build_release:
-    name: Build - Check if is buildable
+    name: Build and publish test file
     runs-on: ubuntu-latest
 
     steps:
@@ -30,7 +30,8 @@ jobs:
       working-directory: CoreFrameworkBase/bin/Release
       run: |
         files=( *.nupkg) |
-        echo ::set-output name=filename::"${files[0]}"
+        echo "${files[0]}" |
+        echo ::set-output name=filename::$(echo "${files[0]}")
       
     - name: Upload nupkg - Upload asset
       uses: actions/upload-artifact@v1.0.0
