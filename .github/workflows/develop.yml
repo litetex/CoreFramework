@@ -34,4 +34,4 @@ jobs:
       uses: actions/upload-artifact@v1.0.0
       with:
         name: ${{ steps.nupkgvar.outputs.filename }}
-        path: ${{ steps.nupkgvar.outputs.filename }}
+        path: CoreFrameworkBase/bin/Release/${{ steps.nupkgvar.outputs.filename }}
