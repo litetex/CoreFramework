@@ -25,11 +25,16 @@ jobs:
       working-directory: CoreFrameworkBase
       run: dotnet pack --configuration Release
             
+    - name: Rename file to prerelease
+      id: nupkgvarorig
+      working-directory: CoreFrameworkBase/bin/Release
+      run: origfile=( *.nupkg) && mv "${origfile}" "${origfile%.*}-dev.${origfile##*.}"
+    
     - name: Find file
       id: nupkgvar
       working-directory: CoreFrameworkBase/bin/Release
       #set develop name!
-      run: files=( *.nupkg) && echo ::set-output name=filename::$(echo "${files[0]%.*}-dev.${files[0]##*.}")
+      run: files=( *.nupkg) && echo ::set-output name=filename::$(echo "${files[0]}")
       
     - name: Upload nupkg to artifacts
       uses: actions/upload-artifact@v1.0.0
