@@ -1,0 +1,37 @@
+name: Develop CI
+
+on:
+  push:
+    branches: 
+      - 'develop'
+
+jobs:
+  build_release:
+    name: Build and publish test file
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+      
+    - name: Setup .NET Core
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: 3.1.102
+      
+    - name: Build
+      run: dotnet build --configuration Release
+    
+    - name: Pack
+      working-directory: CoreFrameworkBase
+      run: dotnet pack --configuration Release
+            
+    - name: Find file
+      id: nupkgvar
+      working-directory: CoreFrameworkBase/bin/Release
+      run: files=( *.nupkg) && echo ::set-output name=filename::$(echo "${files[0]}")
+      
+    - name: Upload nupkg - Upload asset
+      uses: actions/upload-artifact@v1.0.0
+      with:
+        name: ${{ steps.nupkgvar.outputs.filename }}
+        path: CoreFrameworkBase/bin/Release/${{ steps.nupkgvar.outputs.filename }}
