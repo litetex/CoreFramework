@@ -53,4 +53,5 @@ jobs:
         asset_content_type: application/octet-stream
       
     - name: Release - Upload nupkg to nuget.org
+      working-directory: CoreFrameworkBase/bin/Release
       run: dotnet nuget push ${{ steps.nupkgvar.outputs.filename }} -k ${{ secrets.NUGET_KEY }} -s https://api.nuget.org/v3/index.json
