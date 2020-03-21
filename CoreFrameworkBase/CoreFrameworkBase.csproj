@@ -11,7 +11,7 @@
     <VersionPrefix>1.0.$(Build).$(Revision)</VersionPrefix>
     <Authors>litetex</Authors>
     <PackageProjectUrl>https://github.com/litetex/CoreFrameworkBase</PackageProjectUrl>
-    <Description>→ https://github.com/litetex/CoreFrameworkBase/blob/develop/README.md</Description>
+    <Description>Things that are frequently used in code</Description>
     <Copyright>Copyright (c) 2020 litetex</Copyright>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
   </PropertyGroup>
