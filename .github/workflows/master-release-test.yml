@@ -23,7 +23,7 @@ jobs:
     
     - name: Pack
       working-directory: CoreFrameworkBase
-      run: dotnet pack --configuration Release
+      run: dotnet pack --configuration Release /p:AssemblyVersion="$(date +"%y.%m.%d.%H.%M.%S.%N")"
             
     - name: Rename file to prerelease
       id: nupkgvarorig
@@ -33,7 +33,6 @@ jobs:
     - name: Find file
       id: nupkgvar
       working-directory: CoreFrameworkBase/bin/Release
-      #set develop name!
       run: files=( *.nupkg) && echo ::set-output name=filename::$(echo "${files[0]}")
       
     - name: Upload nupkg to artifacts
@@ -42,6 +41,6 @@ jobs:
         name: ${{ steps.nupkgvar.outputs.filename }}
         path: CoreFrameworkBase/bin/Release/${{ steps.nupkgvar.outputs.filename }}
       
-    - name: Release - Upload nupkg to nuget.org
-      working-directory: CoreFrameworkBase/bin/Release
-      run: dotnet nuget push ${{ steps.nupkgvar.outputs.filename }} -k ${{ secrets.NUGET_KEY }} -s https://api.nuget.org/v3/index.json
+#    - name: Release - Upload nupkg to nuget.org
+#      working-directory: CoreFrameworkBase/bin/Release
+#      run: dotnet nuget push ${{ steps.nupkgvar.outputs.filename }} -k ${{ secrets.NUGET_KEY }} -s https://api.nuget.org/v3/index.json
