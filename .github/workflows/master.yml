@@ -30,8 +30,27 @@ jobs:
       working-directory: CoreFrameworkBase/bin/Release
       run: files=( *.nupkg) && echo ::set-output name=filename::$(echo "${files[0]}")
       
-    - name: Upload nupkg - Upload asset
+    - name: Upload nupkg to artifacts
       uses: actions/upload-artifact@v1.0.0
       with:
         name: ${{ steps.nupkgvar.outputs.filename }}
         path: CoreFrameworkBase/bin/Release/${{ steps.nupkgvar.outputs.filename }}
+        
+    - name: Release - Create Draft for Release
+      id: create_draft
+      uses: release-drafter/release-drafter@v5
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        
+    - name: Release - Upload nupkg
+      uses: actions/upload-release-asset@v1.0.2
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        upload_url: ${{ steps.create_draft.outputs.upload_url }} 
+        asset_path: CoreFrameworkBase/bin/Release/${{ steps.nupkgvar.outputs.filename }}
+        asset_name: ${{ steps.nupkgvar.outputs.filename }}
+        asset_content_type: application/octet-stream
+      
+    - name: Release - Upload nupkg to nuget.org
+      run: dotnet nuget push ${{ steps.nupkgvar.outputs.filename }} -k ${{ secrets.NUGET_KEY }} -s https://api.nuget.org/v3/index.json
