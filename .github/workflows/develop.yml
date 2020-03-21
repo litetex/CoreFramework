@@ -24,7 +24,11 @@ jobs:
     - name: Pack
       working-directory: CoreFrameworkBase
       run: dotnet pack --configuration Release
-          
+      
+    - name: DEBUG
+      working-directory: CoreFrameworkBase/bin/Release
+      run: ls -lha
+      
     - name: Find file
       id: nupkgvar
       working-directory: CoreFrameworkBase/bin/Release
