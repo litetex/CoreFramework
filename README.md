@@ -1,2 +1,2 @@
 # CoreFrameworkBase
-Things that I use frequently my code
+Things that I use frequently in my code
