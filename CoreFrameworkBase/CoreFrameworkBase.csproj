@@ -5,7 +5,8 @@
 
     <RestorePackagesWithLockFile>true</RestorePackagesWithLockFile>
     
-    <!--Emulate 1.0.* versioning behavior-->
+    <!-- Emulate .NET Frameworks versioning behavior 'GenerateVersionFromPatternAndCurrentTime' (UTC based) -->
+    <!-- https://github.com/dotnet/sdk/issues/8416#issuecomment-354095128 -->
     <Build>$([System.DateTime]::op_Subtraction($([System.DateTime]::get_UtcNow().get_Date()),$([System.DateTime]::new(2000,1,1))).get_TotalDays())</Build>
     <Revision>$([MSBuild]::Divide($([System.DateTime]::get_UtcNow().get_TimeOfDay().get_TotalSeconds()), 2).ToString('F0'))</Revision>
     <VersionPrefix>1.0.$(Build).$(Revision)</VersionPrefix>
