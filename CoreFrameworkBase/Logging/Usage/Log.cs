@@ -8,10 +8,9 @@ namespace YOUR_NAMESPACE
    /// <summary>
    /// Adapter for CoreFrameworkbase
    /// </summary>
-   /// <lastUpdatedAt>2020-01-28</lastUpdatedAt>
    internal class Log
    {
-      private Log()
+      protected Log()
       {
          //No instances pls
       }

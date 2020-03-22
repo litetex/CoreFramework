@@ -17,12 +17,12 @@ namespace CoreFrameworkBase.Logging
    {
       public static LoggerInitializer Current { get; set; } = new LoggerInitializer();
 
-      private static bool LoggerSet { get; set; } = false;
+      protected static bool LoggerSet { get; set; } = false;
 
-      private string RelativeLogFileDirectory { get; set; } = "logs";
-      private string FileDateTimeFormat { get; set; } = "yyyy-MM-dd-HH-mm-ss";
-      private string LogFileExtension { get; set; } = ".log";
-      public string LogfilePath { get; private set; }
+      protected string RelativeLogFileDirectory { get; set; } = "logs";
+      protected string FileDateTimeFormat { get; set; } = "yyyy-MM-dd-HH-mm-ss";
+      protected string LogFileExtension { get; set; } = ".log";
+      public string LogfilePath { get; protected set; }
 
       public void InitLogger(bool writeFile = false)
       {

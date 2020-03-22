@@ -13,14 +13,14 @@ namespace CoreFrameworkBase.Crash
    {
       public static CrashDetector Current { get; set; } = new CrashDetector();
 
-      private CrashDetector() { }
+      protected CrashDetector() { }
 
       public void Init()
       {
          AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
       }
 
-      private void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs ev)
+      protected void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs ev)
       {
          try
          {
