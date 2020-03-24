@@ -17,6 +17,8 @@
     <Description>Things that are frequently used in code</Description>
     <Copyright>Copyright (c) 2020 litetex</Copyright>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <RepositoryUrl>https://github.com/litetex/CoreFrameworkBase.git</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
     
   </PropertyGroup>
 
