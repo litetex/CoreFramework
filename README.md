@@ -4,4 +4,4 @@
 [![Build develop nupkg](https://img.shields.io/github/workflow/status/litetex/CoreFrameworkBase/Develop%20CI?label=build%20develop%20nupkg)](https://github.com/litetex/CoreFrameworkBase/actions?query=workflow%3A%22Develop+CI%22)
 
 # CoreFrameworkBase
-Things that I use frequently in my code
+Things that are frequently used in code
