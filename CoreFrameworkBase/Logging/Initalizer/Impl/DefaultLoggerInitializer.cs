@@ -58,6 +58,8 @@ namespace CoreFrameworkBase.Logging.Initalizer.Impl
             DoWriteFile(baseConf);
          }
 
+         Serilog.Log.Logger = baseConf.CreateLogger();
+
          if (WriteInitalizerInfo)
             FinalizeInfo();
       }
