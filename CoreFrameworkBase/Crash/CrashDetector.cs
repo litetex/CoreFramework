@@ -1,4 +1,5 @@
-﻿using CoreFrameworkBase.Logging;
+﻿using CoreFrameworkBase.Logging.Initalizer;
+using CoreFrameworkBase.Logging.Initalizer.Impl;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -24,7 +25,7 @@ namespace CoreFrameworkBase.Crash
       {
          try
          {
-            LoggerInitializer.Current.InitLogger();
+            CurrentLoggerInitializer.InitializeWith(new DefaultLoggerInitializer());
 
             Log.Fatal("Detected UnhandledException");
             if (ev.ExceptionObject is Exception ex)
