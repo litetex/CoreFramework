@@ -22,6 +22,9 @@
     <PackageIcon>icon.png</PackageIcon>
     <PackageIconUrl />
     
+    <IncludeSymbols>true</IncludeSymbols>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+    
   </PropertyGroup>
 
   <ItemGroup>
@@ -33,7 +36,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Include="icon.png" Pack="true" PackagePath=""/>
+    <None Include="icon.png" Pack="true" PackagePath="" />
   </ItemGroup>
 
 </Project>

@@ -10,9 +10,12 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Reflection;
 using Serilog.Events;
+using CoreFrameworkBase.Logging.Initalizer;
+using CoreFrameworkBase.Logging.Initalizer.Impl;
 
 namespace CoreFrameworkBase.Logging
 {
+   [Obsolete("Use the new Initializationsystem -> CoreFrameworkBase.Logging.Initalizer")]
    public class LoggerInitializer
    {
       public static LoggerInitializer Current { get; set; } = new LoggerInitializer();
@@ -34,45 +37,13 @@ namespace CoreFrameworkBase.Logging
 
          LoggerSet = true;
 
-         var outputTemplateCons = "{Timestamp:HH:mm:ss,fff} {Level:u3} {ThreadId,-2} {Message:lj}{NewLine}{Exception}";
-         
-
-         var loggerconf = new LoggerConfiguration()
-#if DEBUG
-            .MinimumLevel.Debug()
-#else
-            .MinimumLevel.Information()
-#endif
-            .MinimumLevel.Override("Microsoft", LogEventLevel.Information)
-            .Enrich.With<Log4NetLevelMapperEnricher>()
-            .Enrich.WithThreadId()
-            .WriteTo.Console(
-               outputTemplate: outputTemplateCons);
-
-         if(writeFile)
+         CurrentLoggerInitializer.InitializeWith(new DefaultLoggerInitializer()
          {
-            var outputTemplateFile = "{Timestamp:HH:mm:ss,fff} {Log4NetLevel} {ThreadId,-2} {Message:lj}{NewLine}{Exception}";
-
-            LogfilePath = $"{RelativeLogFileDirectory}{Path.DirectorySeparatorChar}{DateTime.Now.ToString(FileDateTimeFormat)}{LogFileExtension}";
-
-            loggerconf.WriteTo.File(
-               LogfilePath,
-               outputTemplate: outputTemplateFile);
-         }
-
-         Serilog.Log.Logger = loggerconf.CreateLogger();
-
-         Log.Info($"****** {Assembly.GetEntryAssembly().GetName().Name} {Assembly.GetEntryAssembly().GetName().Version} ******");
-         Log.Info($"****** {Assembly.GetExecutingAssembly().GetName().Name} {Assembly.GetExecutingAssembly().GetName().Version} ******");
-
-         if (writeFile)
-            Log.Info($"Logging to file: '{LogfilePath}'");
-
-         AppDomain.CurrentDomain.ProcessExit += (s, ev) =>
-         {
-            Log.Info("Shutting down logger; Flushing...");
-            Serilog.Log.CloseAndFlush();
-         };
+            RelativeLogFileDirectory = this.RelativeLogFileDirectory,
+            FileDateTimeFormat = this.FileDateTimeFormat,
+            LogFileExtension = this.LogFileExtension,
+            WriteFile = writeFile
+         });
       }
      
    }
