@@ -47,10 +47,6 @@ jobs:
         name: ${{ steps.snupkgvar.outputs.filename }}
         path: CoreFrameworkBase/bin/Release/${{ steps.nsupkgvar.outputs.filename }}
             
-    - name: Release - Upload nupkg to nuget.org
+    - name: Release - Upload nupkg (includes snupkg) to nuget.org
       working-directory: CoreFrameworkBase/bin/Release
       run: dotnet nuget push ${{ steps.nupkgvar.outputs.filename }} -k ${{ secrets.NUGET_KEY }} -s https://api.nuget.org/v3/index.json
-    
-    - name: Release - Upload snupkg to nuget.org
-      working-directory: CoreFrameworkBase/bin/Release
-      run: dotnet nuget push ${{ steps.snupkgvar.outputs.filename }} -k ${{ secrets.NUGET_KEY }} -s https://api.nuget.org/v3/index.json
