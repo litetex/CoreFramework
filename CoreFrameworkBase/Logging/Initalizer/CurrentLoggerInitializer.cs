@@ -8,7 +8,7 @@ namespace CoreFrameworkBase.Logging.Initalizer
    {
       static readonly object lockInit = new object();
 
-      static ILoggerInitializer Current { get; set; }
+      public static ILoggerInitializer Current { get; private set; }
 
       public static void InitializeWith(ILoggerInitializer loggerInitializer)
       {

@@ -14,31 +14,31 @@ namespace CoreFrameworkBase.Logging.Initalizer.Impl
 {
    public class DefaultLoggerInitializer : BaseLoggerInitializer
    {
-      public LogEventLevel MinimumLogEventLevel { get; set; } = LogEventLevel.Information;
+      public virtual LogEventLevel MinimumLogEventLevel { get; set; } = LogEventLevel.Information;
 
-      public bool WriteInitalizerInfo { get; set; } = true;
+      public virtual bool WriteInitalizerInfo { get; set; } = true;
 
       #region ConsoleProps
 
-      public bool WriteConsole { get; set; } = true;
+      public virtual bool WriteConsole { get; set; } = true;
 
-      public LogEventLevel? MinimumLogEventLevelConsole { get; set; }
+      public virtual LogEventLevel? MinimumLogEventLevelConsole { get; set; }
 
-      public string OutputTemplateConsole { get; set; } = "{Timestamp:HH:mm:ss,fff} {Level:u3} {ThreadId,-2} {Message:lj}{NewLine}{Exception}";
+      public virtual string OutputTemplateConsole { get; set; } = "{Timestamp:HH:mm:ss,fff} {Level:u3} {ThreadId,-2} {Message:lj}{NewLine}{Exception}";
 
       #endregion ConsoleProps
 
       #region FileProps
 
-      public bool WriteFile { get; set; } = false;
+      public virtual bool WriteFile { get; set; } = false;
 
-      public LogEventLevel? MinimumLogEventLevelFile { get; set; }
+      public virtual LogEventLevel? MinimumLogEventLevelFile { get; set; }
 
-      public string OutputTemplateFile { get; set; } = "{Timestamp:HH:mm:ss,fff} {Log4NetLevel} {ThreadId,-2} {Message:lj}{NewLine}{Exception}";
+      public virtual string OutputTemplateFile { get; set; } = "{Timestamp:HH:mm:ss,fff} {Log4NetLevel} {ThreadId,-2} {Message:lj}{NewLine}{Exception}";
 
-      public string RelativeLogFileDirectory { get; set; } = "logs";
-      public string FileDateTimeFormat { get; set; } = "yyyy-MM-dd-HH-mm-ss";
-      public string LogFileExtension { get; set; } = ".log";
+      public virtual string RelativeLogFileDirectory { get; set; } = "logs";
+      public virtual string FileDateTimeFormat { get; set; } = "yyyy-MM-dd-HH-mm-ss";
+      public virtual string LogFileExtension { get; set; } = ".log";
 
       #endregion FileProps
 
@@ -64,7 +64,7 @@ namespace CoreFrameworkBase.Logging.Initalizer.Impl
             FinalizeInfo();
       }
 
-      protected LoggerConfiguration GetBaseLoggerConfig()
+      protected virtual LoggerConfiguration GetBaseLoggerConfig()
       {
          return new LoggerConfiguration()
             .MinimumLevel.Override("Microsoft", LogEventLevel.Information)
@@ -72,7 +72,7 @@ namespace CoreFrameworkBase.Logging.Initalizer.Impl
             .Enrich.WithThreadId();
       }
 
-      protected LoggerConfiguration SetLogEventLevelToLoggerConfiguration(LoggerConfiguration loggerConfiguration)
+      protected virtual LoggerConfiguration SetLogEventLevelToLoggerConfiguration(LoggerConfiguration loggerConfiguration)
       {
          return MinimumLogEventLevel switch
          {
@@ -85,14 +85,14 @@ namespace CoreFrameworkBase.Logging.Initalizer.Impl
             _ => loggerConfiguration.MinimumLevel.Information(),
          };
       }
-      protected void DoWriteConsole(LoggerConfiguration baseConf)
+      protected virtual void DoWriteConsole(LoggerConfiguration baseConf)
       {
          baseConf.WriteTo.Console(
             outputTemplate: OutputTemplateConsole,
             restrictedToMinimumLevel: MinimumLogEventLevelConsole ?? MinimumLogEventLevel);
       }
 
-      protected void DoWriteFile(LoggerConfiguration baseConf)
+      protected virtual void DoWriteFile(LoggerConfiguration baseConf)
       {
          baseConf.WriteTo.File(
             LogfilePath,
@@ -100,9 +100,9 @@ namespace CoreFrameworkBase.Logging.Initalizer.Impl
             restrictedToMinimumLevel: MinimumLogEventLevelFile ?? MinimumLogEventLevel);
       }
 
-      protected string GetLogFilePath() => $"{RelativeLogFileDirectory}{Path.DirectorySeparatorChar}{DateTime.Now.ToString(FileDateTimeFormat)}{LogFileExtension}";
+      protected virtual string GetLogFilePath() => $"{RelativeLogFileDirectory}{Path.DirectorySeparatorChar}{DateTime.Now.ToString(FileDateTimeFormat)}{LogFileExtension}";
 
-      protected void FinalizeInfo()
+      protected virtual void FinalizeInfo()
       {
          Log.Info($"****** {Assembly.GetEntryAssembly().GetName().Name} {Assembly.GetEntryAssembly().GetName().Version} ******");
          Log.Info($"****** {Assembly.GetExecutingAssembly().GetName().Name} {Assembly.GetExecutingAssembly().GetName().Version} ******");
