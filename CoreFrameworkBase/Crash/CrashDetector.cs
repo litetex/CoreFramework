@@ -1,4 +1,5 @@
-﻿using CoreFrameworkBase.Logging;
+﻿using CoreFrameworkBase.Logging.Initalizer;
+using CoreFrameworkBase.Logging.Initalizer.Impl;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -11,9 +12,12 @@ namespace CoreFrameworkBase.Crash
 {
    public class CrashDetector
    {
-      public static CrashDetector Current { get; set; } = new CrashDetector();
+      public ILoggerInitializer LoggerInitializer { get; set; } = new DefaultLoggerInitializer()
+      {
+         WriteFile = true
+      };
 
-      protected CrashDetector() { }
+      public CrashDetector() { }
 
       public void Init()
       {
@@ -24,7 +28,7 @@ namespace CoreFrameworkBase.Crash
       {
          try
          {
-            LoggerInitializer.Current.InitLogger();
+            CurrentLoggerInitializer.InitializeWith(LoggerInitializer);
 
             Log.Fatal("Detected UnhandledException");
             if (ev.ExceptionObject is Exception ex)
