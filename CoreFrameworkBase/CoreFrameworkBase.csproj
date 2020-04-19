@@ -22,6 +22,9 @@
     <PackageIcon>icon.png</PackageIcon>
     <PackageIconUrl />
     
+    <IncludeSymbols>true</IncludeSymbols>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+    
   </PropertyGroup>
 
   <ItemGroup>
