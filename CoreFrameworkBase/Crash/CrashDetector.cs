@@ -3,6 +3,7 @@ using CoreFrameworkBase.Logging.Initalizer.Impl;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Diagnostics.Contracts;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -21,6 +22,7 @@ namespace CoreFrameworkBase.Crash
 
       public void Init()
       {
+         Contract.Requires(LoggerInitializer != null);
          AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
       }
 
