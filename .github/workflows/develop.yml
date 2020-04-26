@@ -16,7 +16,7 @@ jobs:
     - name: Setup .NET Core
       uses: actions/setup-dotnet@v1
       with:
-        dotnet-version: 3.1.102
+        dotnet-version: 3.1.201
       
     - name: Build
       run: dotnet build --configuration Release
@@ -25,7 +25,7 @@ jobs:
       working-directory: CoreFrameworkBase
       run: dotnet pack --configuration Release -p:VersionSuffix=dev
             
-    - name: Find file
+    - name: Find nupkg file
       id: nupkgvar
       working-directory: CoreFrameworkBase/bin/Release
       run: files=( *.nupkg) && echo ::set-output name=filename::$(echo "${files[0]}")
@@ -35,3 +35,14 @@ jobs:
       with:
         name: ${{ steps.nupkgvar.outputs.filename }}
         path: CoreFrameworkBase/bin/Release/${{ steps.nupkgvar.outputs.filename }}
+        
+    - name: Find snupkg file
+      id: snupkgvar
+      working-directory: CoreFrameworkBase/bin/Release
+      run: files=( *.snupkg) && echo ::set-output name=filename::$(echo "${files[0]}")
+      
+    - name: Upload snupkg - Upload asset
+      uses: actions/upload-artifact@v1.0.0
+      with:
+        name: ${{ steps.snupkgvar.outputs.filename }}
+        path: CoreFrameworkBase/bin/Release/${{ steps.snupkgvar.outputs.filename }}
