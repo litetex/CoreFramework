@@ -32,12 +32,14 @@ namespace CoreFrameworkBase.Logging.Initalizer.Impl
 
       public virtual bool WriteFile { get; set; } = false;
 
+      public virtual bool FileShared { get; set; } = true;
+
       public virtual LogEventLevel? MinimumLogEventLevelFile { get; set; }
 
       public virtual string OutputTemplateFile { get; set; } = "{Timestamp:HH:mm:ss,fff} {Log4NetLevel} {ThreadId,-2} {Message:lj}{NewLine}{Exception}";
 
       public virtual string RelativeLogFileDirectory { get; set; } = "logs";
-      public virtual string FileDateTimeFormat { get; set; } = "yyyy-MM-dd-HH-mm-ss";
+      public virtual string FileDateTimeFormat { get; set; } = "yyyy-MM-dd-HH-mm-ss-fff";
       public virtual string LogFileExtension { get; set; } = ".log";
 
       #endregion FileProps
@@ -96,6 +98,7 @@ namespace CoreFrameworkBase.Logging.Initalizer.Impl
       {
          baseConf.WriteTo.File(
             LogfilePath,
+            shared: FileShared,
             outputTemplate: OutputTemplateFile,
             restrictedToMinimumLevel: MinimumLogEventLevelFile ?? MinimumLogEventLevel);
       }
