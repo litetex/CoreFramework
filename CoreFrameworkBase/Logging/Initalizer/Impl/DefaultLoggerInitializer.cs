@@ -67,7 +67,7 @@ namespace CoreFrameworkBase.Logging.Initalizer.Impl
       {
          return new LoggerConfiguration()
             .MinimumLevel.Override("Microsoft", LogEventLevel.Information)
-            .Enrich.With<Log4NetLevelMapperEnricher>()
+            .Enrich.With<ShortLogLevelMapperEnricher>()
             .Enrich.WithThreadId();
       }
 
