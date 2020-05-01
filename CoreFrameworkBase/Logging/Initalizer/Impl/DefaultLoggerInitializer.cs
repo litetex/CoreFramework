@@ -14,54 +14,53 @@ namespace CoreFrameworkBase.Logging.Initalizer.Impl
 {
    public class DefaultLoggerInitializer : BaseLoggerInitializer
    {
-      public virtual LogEventLevel MinimumLogEventLevel { get; set; } = LogEventLevel.Information;
+      public DefaultLoggerInitializerConfig Config { get; set; } = new DefaultLoggerInitializerConfig();
 
-      public virtual bool WriteInitalizerInfo { get; set; } = true;
-
-      #region ConsoleProps
-
-      public virtual bool WriteConsole { get; set; } = true;
-
-      public virtual LogEventLevel? MinimumLogEventLevelConsole { get; set; }
-
-      public virtual string OutputTemplateConsole { get; set; } = "{Timestamp:HH:mm:ss,fff} {Level:u3} {ThreadId,-2} {Message:lj}{NewLine}{Exception}";
-
-      #endregion ConsoleProps
-
-      #region FileProps
-
-      public virtual bool WriteFile { get; set; } = false;
-
-      public virtual LogEventLevel? MinimumLogEventLevelFile { get; set; }
-
-      public virtual string OutputTemplateFile { get; set; } = "{Timestamp:HH:mm:ss,fff} {Log4NetLevel} {ThreadId,-2} {Message:lj}{NewLine}{Exception}";
-
-      public virtual string RelativeLogFileDirectory { get; set; } = "logs";
-      public virtual string FileDateTimeFormat { get; set; } = "yyyy-MM-dd-HH-mm-ss";
-      public virtual string LogFileExtension { get; set; } = ".log";
-
-      #endregion FileProps
+      public DefaultLoggerInitializer(DefaultLoggerInitializerConfig config = null)
+      {
+         if(config != null)
+            Config = config;
+      }
 
       public string LogfilePath { get; protected set; }
+
+      public bool WritingToFile { get; protected set; } = false;
+
+      public bool WritingToConsole { get; protected set; } = false;
 
       protected override void DoInitialization()
       {
          var baseConf = GetBaseLoggerConfig();
          SetLogEventLevelToLoggerConfiguration(baseConf);
 
-         if(WriteConsole)
+         // Console
+         if (Config.WriteConsole && !WritingToConsole)
+            WriteConsoleInitInfo();
+         if (Config.WriteConsole)
             DoWriteConsole(baseConf);
 
-         if (WriteFile)
+         // File
+         if (Config.CreateLogFilePathOnStartup)
+            LogfilePath ??= GetLogFilePath();
+
+         if (Config.WriteFile && !WritingToFile)
+            WriteFileInitInfo();
+         if (Config.WriteFile)
          {
-            LogfilePath = GetLogFilePath();
+            LogfilePath ??= GetLogFilePath();
             DoWriteFile(baseConf);
          }
 
          Serilog.Log.Logger = baseConf.CreateLogger();
 
-         if (WriteInitalizerInfo)
-            FinalizeInfo();
+         FinalizeInfo();
+
+         AppDomain.CurrentDomain.ProcessExit -= OnExit;
+         if(Config.FlushOnExit)
+            AppDomain.CurrentDomain.ProcessExit += OnExit;
+
+         WritingToConsole = Config.WriteConsole;
+         WritingToFile = Config.WriteFile;
       }
 
       protected virtual LoggerConfiguration GetBaseLoggerConfig()
@@ -74,7 +73,7 @@ namespace CoreFrameworkBase.Logging.Initalizer.Impl
 
       protected virtual LoggerConfiguration SetLogEventLevelToLoggerConfiguration(LoggerConfiguration loggerConfiguration)
       {
-         return MinimumLogEventLevel switch
+         return Config.MinimumLogEventLevel switch
          {
             LogEventLevel.Verbose => loggerConfiguration.MinimumLevel.Verbose(),
             LogEventLevel.Debug => loggerConfiguration.MinimumLevel.Debug(),
@@ -88,27 +87,51 @@ namespace CoreFrameworkBase.Logging.Initalizer.Impl
       protected virtual void DoWriteConsole(LoggerConfiguration baseConf)
       {
          baseConf.WriteTo.Console(
-            outputTemplate: OutputTemplateConsole,
-            restrictedToMinimumLevel: MinimumLogEventLevelConsole ?? MinimumLogEventLevel);
+            outputTemplate: Config.OutputTemplateConsole,
+            restrictedToMinimumLevel: Config.MinimumLogEventLevelConsole ?? Config.MinimumLogEventLevel);
       }
 
       protected virtual void DoWriteFile(LoggerConfiguration baseConf)
       {
          baseConf.WriteTo.File(
             LogfilePath,
-            outputTemplate: OutputTemplateFile,
-            restrictedToMinimumLevel: MinimumLogEventLevelFile ?? MinimumLogEventLevel);
+            shared: Config.FileShared,
+            outputTemplate: Config.OutputTemplateFile,
+            restrictedToMinimumLevel: Config.MinimumLogEventLevelFile ?? Config.MinimumLogEventLevel);
       }
 
-      protected virtual string GetLogFilePath() => $"{RelativeLogFileDirectory}{Path.DirectorySeparatorChar}{DateTime.Now.ToString(FileDateTimeFormat)}{LogFileExtension}";
+      protected virtual string GetLogFilePath() => $"{Config.RelativeLogFileDirectory}{Path.DirectorySeparatorChar}{DateTime.Now.ToString(Config.FileDateTimeFormat)}{Config.LogFileExtension}";
+
+      protected virtual void OnExit(object s, EventArgs ev)
+      {
+         Log.Info("Shutting down logger; Flushing...");
+         Serilog.Log.CloseAndFlush();
+      }
 
       protected virtual void FinalizeInfo()
       {
-         Log.Info($"****** {Assembly.GetEntryAssembly().GetName().Name} {Assembly.GetEntryAssembly().GetName().Version} ******");
-         Log.Info($"****** {Assembly.GetExecutingAssembly().GetName().Name} {Assembly.GetExecutingAssembly().GetName().Version} ******");
+         if (!Initialized)
+            Log.Info("Initalized logging");
+         else
+            Log.Info("Reinitalized logging");
 
-         if (WriteFile)
+         if (Config.WriteFile && !WritingToFile)
             Log.Info($"Logging to file: '{LogfilePath}'");
+      }
+
+      protected virtual void WriteConsoleInitInfo()
+      {
+         Console.WriteLine($"****** {Assembly.GetEntryAssembly().GetName().Name} {Assembly.GetEntryAssembly().GetName().Version} ******");
+         Console.WriteLine($"****** {Assembly.GetExecutingAssembly().GetName().Name} {Assembly.GetExecutingAssembly().GetName().Version} ******");
+      }
+
+      protected virtual void WriteFileInitInfo()
+      {
+         File.AppendAllLines(LogfilePath, new string[]
+         {
+            $"****** {Assembly.GetEntryAssembly().GetName().Name} {Assembly.GetEntryAssembly().GetName().Version} ******",
+            $"****** {Assembly.GetExecutingAssembly().GetName().Name} {Assembly.GetExecutingAssembly().GetName().Version} ******",
+         });
       }
    }
 }

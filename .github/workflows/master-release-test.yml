@@ -30,7 +30,7 @@ jobs:
       working-directory: CoreFrameworkBase/bin/Release
       run: files=( *.nupkg) && echo ::set-output name=filename::$(echo "${files[0]}")
       
-    - name: Upload nupkg to artifacts
+    - name: Upload nupkg - Upload asset
       uses: actions/upload-artifact@v1.0.0
       with:
         name: ${{ steps.nupkgvar.outputs.filename }}
@@ -45,7 +45,7 @@ jobs:
       uses: actions/upload-artifact@v1.0.0
       with:
         name: ${{ steps.snupkgvar.outputs.filename }}
-        path: CoreFrameworkBase/bin/Release/${{ steps.nsupkgvar.outputs.filename }}
+        path: CoreFrameworkBase/bin/Release/${{ steps.snupkgvar.outputs.filename }}
             
     - name: Release - Upload nupkg (includes snupkg) to nuget.org
       working-directory: CoreFrameworkBase/bin/Release
