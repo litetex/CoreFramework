@@ -6,7 +6,7 @@ using System.Text;
 
 namespace CoreFrameworkBase.Config
 {
-   public abstract class FileBasedConfig<C> where C : FileBasedConfigurator
+   public abstract class FileBasedConfig<C> where C : FileBasedConfigConfigurator
    {
       /// <summary>
       /// Configuration
@@ -14,7 +14,7 @@ namespace CoreFrameworkBase.Config
       /// <remarks>
       /// This must be excluded while serializing/deserializing!!!
       /// </remarks>
-      public virtual C Config { get; set; }
+      public abstract C Config { get; set; }
 
       /// <summary>
       /// Loads from file

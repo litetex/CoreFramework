@@ -6,20 +6,27 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using static CoreFrameworkBase.Config.JsonConfig;
 
 namespace CoreFrameworkBase.Config
 {
    /// <summary>
    /// Extend this class to create a custom Config
    /// </summary>
-   public abstract class JsonConfig : FileBasedConfig<Configurator>
+   public abstract class JsonConfig : JsonConfig<JsonConfigConfigurator>
+   {
+      protected JsonConfig()
+      {
+         Config = new JsonConfigConfigurator();
+      }
+   }
+
+   public abstract class JsonConfig<C> : FileBasedConfig<C> where C : JsonConfigConfigurator
    {
       /// <summary>
       /// Configuration
       /// </summary>
       [JsonIgnore]
-      public override Configurator Config { get; set; } = new Configurator();
+      public override C Config { get; set; }
 
       protected JsonConfig()
       { }
@@ -33,41 +40,28 @@ namespace CoreFrameworkBase.Config
       {
          JsonConvert.PopulateObject(filecontent, this, Config.Settings);
       }
+   }
+
+   /// <summary>
+   /// Outsourced class for Configuration
+   /// </summary>
+   public class JsonConfigConfigurator : FileBasedConfigConfigurator
+   {
+      public const string DEFAULT_SAVEPATH = "config.json";
 
       /// <summary>
-      /// Outsourced class for Configuration
+      /// The Path where the file is saved; by default <see cref="DEFAULT_SAVEPATH"/> 
       /// </summary>
-      public class Configurator : FileBasedConfigurator
+      /// <remarks>You shouldn't change it at runtime!</remarks>
+      public override string SavePath { get; set; } = DEFAULT_SAVEPATH;
+
+      /// <summary>
+      /// Settings that are used, null = Default
+      /// </summary>
+      public JsonSerializerSettings Settings { get; set; } = new JsonSerializerSettings()
       {
-         public const string DEFAULT_SAVEPATH = "config.json";
-
-         public Configurator()
-         {
-
-         }
-
-         public Configurator(string savePath)
-         {
-            Contract.Requires(savePath != null);
-            SavePath = savePath;
-         }
-
-
-         /// <summary>
-         /// The Path where the file is saved; by default <see cref="DEFAULT_SAVEPATH"/> 
-         /// </summary>
-         /// <remarks>You shouldn't change it at runtime!</remarks>
-         public override string SavePath { get; set; } = DEFAULT_SAVEPATH;
-
-         /// <summary>
-         /// Settings that are used, null = Default
-         /// </summary>
-         public JsonSerializerSettings Settings { get; set; } = new JsonSerializerSettings()
-         {
-            ObjectCreationHandling = ObjectCreationHandling.Replace
-         };
-      }
-
+         ObjectCreationHandling = ObjectCreationHandling.Replace
+      };
    }
 
 }
