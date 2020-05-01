@@ -4,8 +4,14 @@ using System.Text;
 
 namespace CoreFrameworkBase.Logging.Initalizer
 {
-   public interface ILoggerInitializer
+   /// <summary>
+   /// Describes a LoggerInitializer
+   /// </summary>
+   public interface ILoggerInitializer : IDisposable
    {
+      /// <summary>
+      /// Should initalize <see cref="Serilog.Log.Logger"/>
+      /// </summary>
       void Initialize();
    }
 }

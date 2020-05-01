@@ -11,9 +11,11 @@ namespace CoreFrameworkBase
          return $"{message}: {(ex != null ? ex.ToString() : "")}";
       }
 
-      private static string FormatForContext(this string message, [CallerMemberName] string memberName = "",
-          [CallerFilePath] string sourceFilePath = "",
-          [CallerLineNumber] int sourceLineNumber = 0)
+      private static string FormatForContext(
+         this string message, 
+         [CallerMemberName] string memberName = "",
+         [CallerFilePath] string sourceFilePath = "",
+         [CallerLineNumber] int sourceLineNumber = 0)
       {
          var fileName = Path.GetFileNameWithoutExtension(sourceFilePath);
          var methodName = memberName;
@@ -21,9 +23,11 @@ namespace CoreFrameworkBase
          return $"{fileName} [{methodName}] {message}";
       }
 
-      public static void Verbose(string message, [CallerMemberName] string memberName = "",
-          [CallerFilePath] string sourceFilePath = "",
-          [CallerLineNumber] int sourceLineNumber = 0)
+      public static void Verbose(
+         string message, 
+         [CallerMemberName] string memberName = "",
+         [CallerFilePath] string sourceFilePath = "",
+         [CallerLineNumber] int sourceLineNumber = 0)
       {
          Serilog.Log.Verbose(
             message
@@ -31,9 +35,12 @@ namespace CoreFrameworkBase
             );
       }
 
-      public static void Verbose(string message, Exception ex, [CallerMemberName] string memberName = "",
-          [CallerFilePath] string sourceFilePath = "",
-          [CallerLineNumber] int sourceLineNumber = 0)
+      public static void Verbose(
+         string message, 
+         Exception ex, 
+         [CallerMemberName] string memberName = "",
+         [CallerFilePath] string sourceFilePath = "",
+         [CallerLineNumber] int sourceLineNumber = 0)
       {
          Serilog.Log.Verbose(
             message
@@ -42,9 +49,24 @@ namespace CoreFrameworkBase
             );
       }
 
-      public static void Debug(string message, [CallerMemberName] string memberName = "",
-          [CallerFilePath] string sourceFilePath = "",
-          [CallerLineNumber] int sourceLineNumber = 0)
+      public static void Verbose(
+         Exception ex,
+         [CallerMemberName] string memberName = "",
+         [CallerFilePath] string sourceFilePath = "",
+         [CallerLineNumber] int sourceLineNumber = 0)
+      {
+
+         Serilog.Log.Verbose(
+            (ex != null ? ex.ToString() : "")
+               .FormatForContext(memberName, sourceFilePath, sourceLineNumber)
+            );
+      }
+
+      public static void Debug(
+         string message, 
+         [CallerMemberName] string memberName = "",
+         [CallerFilePath] string sourceFilePath = "",
+         [CallerLineNumber] int sourceLineNumber = 0)
       {
          Serilog.Log.Debug(
             message
@@ -52,9 +74,12 @@ namespace CoreFrameworkBase
             );
       }
 
-      public static void Debug(string message, Exception ex, [CallerMemberName] string memberName = "",
-          [CallerFilePath] string sourceFilePath = "",
-          [CallerLineNumber] int sourceLineNumber = 0)
+      public static void Debug(
+         string message, 
+         Exception ex, 
+         [CallerMemberName] string memberName = "",
+         [CallerFilePath] string sourceFilePath = "",
+         [CallerLineNumber] int sourceLineNumber = 0)
       {
          Serilog.Log.Debug(
             message
@@ -63,9 +88,24 @@ namespace CoreFrameworkBase
             );
       }
 
-      public static void Info(string message, [CallerMemberName] string memberName = "",
-          [CallerFilePath] string sourceFilePath = "",
-          [CallerLineNumber] int sourceLineNumber = 0)
+      public static void Debug(
+         Exception ex,
+         [CallerMemberName] string memberName = "",
+         [CallerFilePath] string sourceFilePath = "",
+         [CallerLineNumber] int sourceLineNumber = 0)
+      {
+
+         Serilog.Log.Debug(
+            (ex != null ? ex.ToString() : "")
+               .FormatForContext(memberName, sourceFilePath, sourceLineNumber)
+            );
+      }
+
+      public static void Info(
+         string message, 
+         [CallerMemberName] string memberName = "",
+         [CallerFilePath] string sourceFilePath = "",
+         [CallerLineNumber] int sourceLineNumber = 0)
       {
          Serilog.Log.Information(
             message
@@ -73,9 +113,12 @@ namespace CoreFrameworkBase
             );
       }
 
-      public static void Info(string message, Exception ex, [CallerMemberName] string memberName = "",
-          [CallerFilePath] string sourceFilePath = "",
-          [CallerLineNumber] int sourceLineNumber = 0)
+      public static void Info(
+         string message, 
+         Exception ex, 
+         [CallerMemberName] string memberName = "",
+         [CallerFilePath] string sourceFilePath = "",
+         [CallerLineNumber] int sourceLineNumber = 0)
       {
 
          Serilog.Log.Information(
@@ -85,9 +128,23 @@ namespace CoreFrameworkBase
             );
       }
 
-      public static void Warn(string message, [CallerMemberName] string memberName = "",
-          [CallerFilePath] string sourceFilePath = "",
-          [CallerLineNumber] int sourceLineNumber = 0)
+      public static void Info(
+         Exception ex,
+         [CallerMemberName] string memberName = "",
+         [CallerFilePath] string sourceFilePath = "",
+         [CallerLineNumber] int sourceLineNumber = 0)
+      {
+
+         Serilog.Log.Information(
+            (ex != null ? ex.ToString() : "")
+               .FormatForContext(memberName, sourceFilePath, sourceLineNumber)
+            );
+      }
+
+      public static void Warn(string message, 
+         [CallerMemberName] string memberName = "",
+         [CallerFilePath] string sourceFilePath = "",
+         [CallerLineNumber] int sourceLineNumber = 0)
       {
 
          Serilog.Log.Warning(
@@ -96,9 +153,12 @@ namespace CoreFrameworkBase
             );
       }
 
-      public static void Warn(string message, Exception ex, [CallerMemberName] string memberName = "",
-          [CallerFilePath] string sourceFilePath = "",
-          [CallerLineNumber] int sourceLineNumber = 0)
+      public static void Warn(
+         string message, 
+         Exception ex, 
+         [CallerMemberName] string memberName = "",
+         [CallerFilePath] string sourceFilePath = "",
+         [CallerLineNumber] int sourceLineNumber = 0)
       {
 
          Serilog.Log.Warning(
@@ -108,9 +168,24 @@ namespace CoreFrameworkBase
             );
       }
 
-      public static void Error(string message, [CallerMemberName] string memberName = "",
-          [CallerFilePath] string sourceFilePath = "",
-          [CallerLineNumber] int sourceLineNumber = 0)
+      public static void Warn(
+         Exception ex,
+         [CallerMemberName] string memberName = "",
+         [CallerFilePath] string sourceFilePath = "",
+         [CallerLineNumber] int sourceLineNumber = 0)
+      {
+
+         Serilog.Log.Warning(
+            (ex != null ? ex.ToString() : "")
+               .FormatForContext(memberName, sourceFilePath, sourceLineNumber)
+            );
+      }
+
+      public static void Error(
+         string message, 
+         [CallerMemberName] string memberName = "",
+         [CallerFilePath] string sourceFilePath = "",
+         [CallerLineNumber] int sourceLineNumber = 0)
       {
 
          Serilog.Log.Error(
@@ -119,9 +194,12 @@ namespace CoreFrameworkBase
            );
       }
 
-      public static void Error(string message, Exception ex, [CallerMemberName] string memberName = "",
-          [CallerFilePath] string sourceFilePath = "",
-          [CallerLineNumber] int sourceLineNumber = 0)
+      public static void Error(
+         string message, 
+         Exception ex,
+         [CallerMemberName] string memberName = "",
+         [CallerFilePath] string sourceFilePath = "",
+         [CallerLineNumber] int sourceLineNumber = 0)
       {
 
          Serilog.Log.Error(
@@ -131,10 +209,11 @@ namespace CoreFrameworkBase
             );
       }
 
-      public static void Error(Exception ex, [CallerMemberName]
-      string memberName = "",
-          [CallerFilePath] string sourceFilePath = "",
-          [CallerLineNumber] int sourceLineNumber = 0)
+      public static void Error(
+         Exception ex, 
+         [CallerMemberName] string memberName = "",
+         [CallerFilePath] string sourceFilePath = "",
+         [CallerLineNumber] int sourceLineNumber = 0)
       {
 
          Serilog.Log.Error(
@@ -143,9 +222,11 @@ namespace CoreFrameworkBase
             );
       }
 
-      public static void Fatal(string message, [CallerMemberName] string memberName = "",
-          [CallerFilePath] string sourceFilePath = "",
-          [CallerLineNumber] int sourceLineNumber = 0)
+      public static void Fatal(
+         string message, 
+         [CallerMemberName] string memberName = "",
+         [CallerFilePath] string sourceFilePath = "",
+         [CallerLineNumber] int sourceLineNumber = 0)
       {
          FatalAction();
 
@@ -155,9 +236,12 @@ namespace CoreFrameworkBase
             );
       }
 
-      public static void Fatal(string message, Exception ex, [CallerMemberName] string memberName = "",
-          [CallerFilePath] string sourceFilePath = "",
-          [CallerLineNumber] int sourceLineNumber = 0)
+      public static void Fatal(
+         string message, 
+         Exception ex, 
+         [CallerMemberName] string memberName = "",
+         [CallerFilePath] string sourceFilePath = "",
+         [CallerLineNumber] int sourceLineNumber = 0)
       {
          FatalAction();
 
@@ -168,9 +252,11 @@ namespace CoreFrameworkBase
             );
       }
 
-      public static void Fatal(Exception ex, [CallerMemberName] string memberName = "",
-          [CallerFilePath] string sourceFilePath = "",
-          [CallerLineNumber] int sourceLineNumber = 0)
+      public static void Fatal(
+         Exception ex, 
+         [CallerMemberName] string memberName = "",
+         [CallerFilePath] string sourceFilePath = "",
+         [CallerLineNumber] int sourceLineNumber = 0)
       {
          FatalAction();
 
