@@ -18,11 +18,11 @@ namespace CoreFrameworkBase.Logging.Initalizer
       /// </summary>
       public static ILoggerInitializer Current { get; private set; }
 
-      private static CurrentLoggerInitializationMode _reInitializationMode = CurrentLoggerInitializationMode.ALLOW_REINITIALIZE;
+      private static CurrentLoggerReSetMode _reInitializationMode = CurrentLoggerReSetMode.ALLOW;
       /// <summary>
-      /// Mode that describes, what happens if <see cref="CurrentLoggerInitializer.InitializeWith(ILoggerInitializer, CurrentLoggerInitializationMode)"/> is called more than once
+      /// Mode that describes, what happens if <see cref="CurrentLoggerInitializer.Set(ILoggerInitializer, CurrentLoggerReSetMode)"/> is called more than once
       /// </summary>
-      public static CurrentLoggerInitializationMode ReInitializationMode
+      public static CurrentLoggerReSetMode ReInitializationMode
       {
          get => _reInitializationMode;
          set
@@ -35,13 +35,13 @@ namespace CoreFrameworkBase.Logging.Initalizer
       }
 
       /// <summary>
-      /// Initalizes <paramref name="initializationMode"/> and sets it to <see cref="Current"/> (behavior may differ through <paramref name="initializationMode"/>)
+      /// Sets <paramref name="loggerInitializer"/> to <see cref="Current"/> (behavior may differ through <paramref name="setMode"/>)
       /// </summary>
-      /// <param name="loggerInitializer"><see cref="ILoggerInitializer"/> that should be initalized</param>
-      /// <param name="initializationMode">See <see cref="CurrentLoggerInitializationMode"/>; default = <see cref="CurrentLoggerInitializationMode.ALLOW_REINITIALIZE"/> </param>
-      public static void InitializeWith(ILoggerInitializer loggerInitializer, CurrentLoggerInitializationMode initializationMode = CurrentLoggerInitializationMode.ALLOW_REINITIALIZE)
+      /// <param name="loggerInitializer"><see cref="ILoggerInitializer"/> that should be set</param>
+      /// <param name="setMode">See <see cref="CurrentLoggerReSetMode"/>; default = <see cref="CurrentLoggerReSetMode.ALLOW"/> </param>
+      public static void Set(ILoggerInitializer loggerInitializer, CurrentLoggerReSetMode setMode = CurrentLoggerReSetMode.ALLOW)
       {
-         ReInitializationMode = initializationMode;
+         ReInitializationMode = setMode;
 
          lock (lockReInitializationMode)
          {
@@ -49,9 +49,9 @@ namespace CoreFrameworkBase.Logging.Initalizer
             {
                if (Current != null)
                {
-                  if (ReInitializationMode == CurrentLoggerInitializationMode.NO_REINITIALIZE)
+                  if (ReInitializationMode == CurrentLoggerReSetMode.NO_ALLOW)
                      return;
-                  else if (ReInitializationMode == CurrentLoggerInitializationMode.ON_REINITIALIZE_THROW_EX)
+                  else if (ReInitializationMode == CurrentLoggerReSetMode.ON_RESET_THROW_EX)
                      throw new NotSupportedException($"{nameof(ReInitializationMode)}='{ReInitializationMode}' states that initalization " +
                         $"with already set and initalized {nameof(ILoggerInitializer)} is not allowed!");
 
@@ -60,28 +60,40 @@ namespace CoreFrameworkBase.Logging.Initalizer
                }
 
                Current = loggerInitializer;
-               Current.Initialize();
             }
          }
       }
 
       /// <summary>
+      /// Initalizes logging with <see cref="CurrentLoggerInitializer.Current"/>
+      /// </summary>
+      /// <param name="initAction">Action to execute on init, e.g. enable writing to a logfile</param>
+      public static void InitLogging(Action<ILoggerInitializer> initAction = null)
+      {
+         if (Current == null)
+            throw new InvalidOperationException($"{nameof(Current)} must be set!");
+
+         initAction?.Invoke(Current);
+         Current.Initialize();
+      }
+
+      /// <summary>
       /// Mode of the Initalization
       /// </summary>
-      public enum CurrentLoggerInitializationMode
+      public enum CurrentLoggerReSetMode
       {
          /// <summary>
-         /// Allow reinitalize/override existing <see cref="ILoggerInitializer"/>
+         /// Allow setting <see cref="ILoggerInitializer"/> again
          /// </summary>
-         ALLOW_REINITIALIZE,
+         ALLOW,
          /// <summary>
-         /// Don't allow reinitalize/override existing <see cref="ILoggerInitializer"/>
+         /// Don't allow setting <see cref="ILoggerInitializer"/>again
          /// </summary>
-         NO_REINITIALIZE,
+         NO_ALLOW,
          /// <summary>
-         /// Don't allow reinitalize/override existing <see cref="ILoggerInitializer"/>, if done throw exception
+         /// Don't allow setting <see cref="ILoggerInitializer"/> again, if done throw exception
          /// </summary>
-         ON_REINITIALIZE_THROW_EX
+         ON_RESET_THROW_EX
       }
    }
 }

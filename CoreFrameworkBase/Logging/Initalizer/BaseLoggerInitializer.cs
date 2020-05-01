@@ -16,18 +16,12 @@ namespace CoreFrameworkBase.Logging.Initalizer
    {
       protected bool Initialized { get; set; } = false;
 
-      protected object lockIsInitialized = new object();
+      protected object lockInit = new object();
 
       public void Initialize()
       {
-         if (Initialized)
-            return;
-
-         lock (lockIsInitialized)
+         lock (lockInit)
          {
-            if (Initialized)
-               return;
-
             DoInitialization();
 
             Initialized = true;
