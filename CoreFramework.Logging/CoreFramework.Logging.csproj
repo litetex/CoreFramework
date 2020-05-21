@@ -27,7 +27,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\CoreFramework\CoreFramework.Base.csproj" />
+    <ProjectReference Include="..\CoreFramework.Base\CoreFramework.Base.csproj" />
   </ItemGroup>
 
   <ItemGroup>
