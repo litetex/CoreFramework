@@ -6,6 +6,7 @@
     <RestorePackagesWithLockFile>true</RestorePackagesWithLockFile>
 
     <PackageId>Litetex.CoreFramework.Logging</PackageId>
+    <Description>Things that are frequently used in code - Logging Module</Description>
     <Authors>litetex</Authors>
     <PackageProjectUrl>https://github.com/litetex/CoreFramework</PackageProjectUrl>
     <Copyright>Copyright (c) 2020 litetex</Copyright>
