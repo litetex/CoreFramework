@@ -5,5 +5,5 @@
 [![Build develop nupkg](https://img.shields.io/github/workflow/status/litetex/CoreFrameworkBase/Develop%20CI?label=build%20develop%20nupkg)](https://github.com/litetex/CoreFrameworkBase/actions?query=workflow%3A%22Develop+CI%22)
 [![Nuget (dev)](https://img.shields.io/nuget/vpre/Litetex.CoreFrameworkBase?label=nuget%20%28dev%29)](https://www.nuget.org/packages/Litetex.CoreFrameworkBase)
 
-# CoreFrameworkBase
+# CoreFramework
 Things that are frequently used in code

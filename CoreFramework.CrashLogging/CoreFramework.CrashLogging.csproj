@@ -1,0 +1,33 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+
+    <RestorePackagesWithLockFile>true</RestorePackagesWithLockFile>
+
+    <!-- Emulate .NET Frameworks versioning behavior 'GenerateVersionFromPatternAndCurrentTime' (UTC based) -->
+    <!-- https://github.com/dotnet/sdk/issues/8416#issuecomment-354095128 -->
+    <Build>$([System.DateTime]::op_Subtraction($([System.DateTime]::get_UtcNow().get_Date()),$([System.DateTime]::new(2000,1,1))).get_TotalDays())</Build>
+    <Revision>$([MSBuild]::Divide($([System.DateTime]::get_UtcNow().get_TimeOfDay().get_TotalSeconds()), 2).ToString('F0'))</Revision>
+    <VersionPrefix>1.0.$(Build).$(Revision)</VersionPrefix>
+
+    <PackageId>Litetex.CoreFramework.CrashLogging</PackageId>
+    <Authors>litetex</Authors>
+    <PackageProjectUrl>https://github.com/litetex/CoreFramework</PackageProjectUrl>
+    <Description>Things that are frequently used in code</Description>
+    <Copyright>Copyright (c) 2020 litetex</Copyright>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <RepositoryUrl>https://github.com/litetex/CoreFramework.git</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageIcon>icon.png</PackageIcon>
+    <PackageIconUrl />
+
+    <IncludeSymbols>true</IncludeSymbols>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\CoreFramework.Logging\CoreFramework.Logging.csproj" />
+  </ItemGroup>
+
+</Project>
