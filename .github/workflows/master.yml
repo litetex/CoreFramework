@@ -50,8 +50,8 @@ jobs:
       id: versionprovider
       run: echo "::set-output name=version::$(cat temp_artf/version/version.txt)"
           
-    - name: Create Release
-      id: create_release
+    - name: Create Release (draft)
+      id: create_draft
       uses: actions/create-release@v1
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
