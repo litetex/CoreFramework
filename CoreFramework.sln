@@ -14,7 +14,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CoreFramework.Config", "Cor
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CoreFramework.Config.Json", "CoreFramework.Config.Json\CoreFramework.Config.Json.csproj", "{7724A98E-DB72-4B6A-807D-5B5BD4925D03}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CoreFramework.Config.Yaml", "CoreFramework.Config.Yml\CoreFramework.Config.Yaml.csproj", "{A2213837-79B0-4BCF-AA1B-523375D09E58}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CoreFramework.Config.Yaml", "CoreFramework.Config.Yaml\CoreFramework.Config.Yaml.csproj", "{A2213837-79B0-4BCF-AA1B-523375D09E58}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CoreFramework.Logging", "CoreFramework.Logging\CoreFramework.Logging.csproj", "{42A3FF77-4AC5-450C-9608-83D54B22436E}"
 EndProject
