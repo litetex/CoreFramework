@@ -30,4 +30,8 @@
     <ProjectReference Include="..\CoreFramework.Base\CoreFramework.Base.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Include="icon.png" Pack="true" PackagePath="" />
+  </ItemGroup>
+
 </Project>
