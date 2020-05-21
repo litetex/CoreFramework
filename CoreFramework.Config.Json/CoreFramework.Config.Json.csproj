@@ -1,0 +1,35 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+
+    <RestorePackagesWithLockFile>true</RestorePackagesWithLockFile>
+
+    <PackageId>Litetex.CoreFramework.Config.Json</PackageId>
+    <Description>Things that are frequently used in code - JSON Configuration Module</Description>
+    <Authors>litetex</Authors>
+    <PackageProjectUrl>https://github.com/litetex/CoreFramework</PackageProjectUrl>
+    <Copyright>Copyright (c) 2020 litetex</Copyright>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <RepositoryUrl>https://github.com/litetex/CoreFramework.git</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageIcon>icon.png</PackageIcon>
+    <PackageIconUrl />
+
+    <IncludeSymbols>true</IncludeSymbols>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\CoreFramework.Config\CoreFramework.Config.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="icon.png" Pack="true" PackagePath="" />
+  </ItemGroup>
+
+</Project>

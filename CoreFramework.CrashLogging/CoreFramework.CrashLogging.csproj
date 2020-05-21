@@ -1,0 +1,31 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+
+    <RestorePackagesWithLockFile>true</RestorePackagesWithLockFile>
+
+    <PackageId>Litetex.CoreFramework.CrashLogging</PackageId>
+    <Description>Things that are frequently used in code - CrashLogging Module</Description>
+    <Authors>litetex</Authors>
+    <PackageProjectUrl>https://github.com/litetex/CoreFramework</PackageProjectUrl>
+    <Copyright>Copyright (c) 2020 litetex</Copyright>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <RepositoryUrl>https://github.com/litetex/CoreFramework.git</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageIcon>icon.png</PackageIcon>
+    <PackageIconUrl />
+
+    <IncludeSymbols>true</IncludeSymbols>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\CoreFramework.Logging\CoreFramework.Logging.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="icon.png" Pack="true" PackagePath="" />
+  </ItemGroup>
+
+</Project>
