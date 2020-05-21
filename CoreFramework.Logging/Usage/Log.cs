@@ -6,7 +6,7 @@ using System.Text;
 namespace YOUR_NAMESPACE
 {
    /// <summary>
-   /// Adapter for CoreFrameworkbase
+   /// Adapter for CoreFramework
    /// </summary>
    internal class Log
    {
