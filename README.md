@@ -11,7 +11,7 @@ Things that are frequently used in code
 
 
 
-| Module | Nuget | Nuget (dev) |
+| Module | Nuget | Nuget (preview/dev) |
 | ------ | -------------- | ----------- |
 | Base | [![Nuget](https://img.shields.io/nuget/v/Litetex.CoreFramework.Base?style=flat-square)](https://www.nuget.org/packages/Litetex.CoreFramework.Base)| [![Nuget (dev)](https://img.shields.io/nuget/vpre/Litetex.CoreFramework.Base?label=nuget%20%28dev%29&style=flat-square)](https://www.nuget.org/packages/Litetex.CoreFramework.Base) |
 | Config | [![Nuget](https://img.shields.io/nuget/v/Litetex.CoreFramework.Config?style=flat-square)](https://www.nuget.org/packages/Litetex.CoreFramework.Config)| [![Nuget (dev)](https://img.shields.io/nuget/vpre/Litetex.CoreFramework.Config?label=nuget%20%28dev%29&style=flat-square)](https://www.nuget.org/packages/Litetex.CoreFramework.Config) |
