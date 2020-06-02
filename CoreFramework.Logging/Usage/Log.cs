@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using System.Text;
@@ -6,7 +6,7 @@ using System.Text;
 namespace YOUR_NAMESPACE
 {
    /// <summary>
-   /// Adapter for CoreFrameworkbase
+   /// Adapter for CoreFramework
    /// </summary>
    internal class Log
    {
@@ -160,7 +160,7 @@ namespace YOUR_NAMESPACE
          [CallerFilePath] string sourceFilePath = "",
          [CallerLineNumber] int sourceLineNumber = 0)
       {
-         CoreFramework.Log.Error(message, memberName, sourceFilePath, sourceLineNumber);
+         CoreFramework.Log.Fatal(message, memberName, sourceFilePath, sourceLineNumber);
       }
 
       public static void Fatal(
@@ -170,7 +170,7 @@ namespace YOUR_NAMESPACE
          [CallerFilePath] string sourceFilePath = "",
          [CallerLineNumber] int sourceLineNumber = 0)
       {
-         CoreFramework.Log.Error(message, ex, memberName, sourceFilePath, sourceLineNumber);
+         CoreFramework.Log.Fatal(message, ex, memberName, sourceFilePath, sourceLineNumber);
       }
 
       public static void Fatal(
@@ -179,7 +179,7 @@ namespace YOUR_NAMESPACE
          [CallerFilePath] string sourceFilePath = "",
          [CallerLineNumber] int sourceLineNumber = 0)
       {
-         CoreFramework.Log.Error(ex, memberName, sourceFilePath, sourceLineNumber);
+         CoreFramework.Log.Fatal(ex, memberName, sourceFilePath, sourceLineNumber);
       }
    }
 }
