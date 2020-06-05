@@ -1,8 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <Deterministic>true</Deterministic>
-    
     <TargetFramework>netcoreapp3.1</TargetFramework>
 
     <RestorePackagesWithLockFile>true</RestorePackagesWithLockFile>
