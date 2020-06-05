@@ -117,7 +117,7 @@ jobs:
     - name: Pack
       working-directory: ${{ matrix.project }}
       run: |
-        dotnet pack --configuration Release -p:PackageVersion=${{ steps.versionprovider.outputs.version }} -p:AssemblyVersion=${{ steps.versionprovider.outputs.version }} -p:AssemblyInformationalVersion=${{ steps.versionprovider.outputs.version }} -p:AssemblyFileVersion=${{ steps.versionprovider.outputs.version }} -p:PathMap="$GITHUB_WORKSPACE=/"
+        dotnet pack --configuration Release -p:PackageVersion=${{ steps.versionprovider.outputs.version }} -p:AssemblyVersion=${{ steps.versionprovider.outputs.version }} -p:AssemblyInformationalVersion=${{ steps.versionprovider.outputs.version }} -p:PathMap="$GITHUB_WORKSPACE=/"
             
     - name: Find nupkg file
       id: nupkgvar
