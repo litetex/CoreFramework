@@ -2,9 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
-
-    <RestorePackagesWithLockFile>true</RestorePackagesWithLockFile>
-
+    
     <PackageId>Litetex.CoreFramework.Logging</PackageId>
     <Description>Things that are frequently used in code - Logging Module</Description>
     <Authors>litetex</Authors>

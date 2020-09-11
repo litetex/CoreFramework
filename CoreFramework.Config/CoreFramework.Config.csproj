@@ -3,8 +3,6 @@
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
 
-    <RestorePackagesWithLockFile>true</RestorePackagesWithLockFile>
-
     <PackageId>Litetex.CoreFramework.Config</PackageId>
     <Description>Things that are frequently used in code - Configuration Module</Description>
     <Authors>litetex</Authors>

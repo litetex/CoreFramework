@@ -3,8 +3,6 @@
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
 
-    <RestorePackagesWithLockFile>true</RestorePackagesWithLockFile>
-
     <PackageId>Litetex.CoreFramework.Config.Yaml</PackageId>
     <Description>Things that are frequently used in code - YAML Configuration Module</Description>
     <Authors>litetex</Authors>
