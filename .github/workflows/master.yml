@@ -26,7 +26,7 @@ jobs:
       version: ${{ steps.versionprovider.outputs.version }}
     
     steps:
-    - name: Generate version and save it to file
+    - name: Generate version
       id: versionprovider
       shell: bash
       # The maximum value for either of the parts is 65534 - https://stackoverflow.com/a/37941296/11649486
