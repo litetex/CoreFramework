@@ -15,66 +15,44 @@ jobs:
     - name: Setup .NET Core
       uses: actions/setup-dotnet@v1
       with:
-        dotnet-version: 3.1.300
+        dotnet-version: 3.1
       
     - name: Build
       run: dotnet build --configuration Release
 
   generate_version:
     runs-on: ubuntu-latest
+    outputs:
+      version: ${{ steps.versionprovider.outputs.version }}
     
     steps:
     - name: Generate version and save it to file
+      id: versionprovider
       shell: bash
       # The maximum value for either of the parts is 65534 - https://stackoverflow.com/a/37941296/11649486
       run: |
-        echo $(date -u +%Y.%m.%d.%k%M) | tee version.txt
-        
-    - name: Upload version - Upload Artifact
-      uses: actions/upload-artifact@v1
-      with:
-        name: version
-        path: version.txt
+        echo "::set-output name=version::$(date -u +%Y.%m.%d.%k%M)"
   
   generate_release:
     runs-on: ubuntu-latest
     needs: [build_all, generate_version]
+    outputs:
+      upload_url: ${{ steps.create_draft.outputs.upload_url }}
     
-    steps:
-    - name: Download version - Download Artifact
-      uses: actions/download-artifact@v1
-      with:
-        name: version
-        path: temp_artf/version
-
-    - name: Provide version from predecessor
-      id: versionprovider
-      run: echo "::set-output name=version::$(cat temp_artf/version/version.txt)"
-          
+    steps:          
     - name: Create Release (draft)
       id: create_draft
       uses: actions/create-release@v1
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
-        tag_name: v${{ steps.versionprovider.outputs.version }}
-        release_name: v${{ steps.versionprovider.outputs.version }}
+        tag_name: v${{ needs.generate_version.outputs.version }}
+        release_name: v${{ needs.generate_version.outputs.version }}
         draft: true
-        
-    - name: Save Asset Upload URL to File
-      shell: bash
-      run: |
-        echo '${{ steps.create_draft.outputs.upload_url }}' > asset_upload_url.txt
-
-    - name: Upload Asset Upload URL - Upload Artifact
-      uses: actions/upload-artifact@v1
-      with:
-        name: asset_upload_url
-        path: asset_upload_url.txt
   
   build_each:
     runs-on: ubuntu-latest
-    needs: [generate_release]
+    needs: [generate_version, generate_release]
     
     strategy:
       fail-fast: true
@@ -90,35 +68,15 @@ jobs:
     steps:    
     - uses: actions/checkout@v2
       
-    - name: Download version - Download Artifact
-      uses: actions/download-artifact@v1
-      with:
-        name: version
-        path: temp_artf/version
-
-    - name: Provide version from predecessor
-      id: versionprovider
-      run: echo "::set-output name=version::$(cat temp_artf/version/version.txt)"
-    
-    - name: Download Asset Upload URL - Download Artifact
-      uses: actions/download-artifact@v1
-      with:
-        name: asset_upload_url
-        path: temp_artf/asset_upload_url
-
-    - name: Fake steps.create_draft.outputs.upload_url from predecessor
-      id: create_draft
-      run: echo "::set-output name=upload_url::$(cat temp_artf/asset_upload_url/asset_upload_url.txt)"
-      
     - name: Setup .NET Core
       uses: actions/setup-dotnet@v1
       with:
-        dotnet-version: 3.1.300
+        dotnet-version: 3.1
             
     - name: Pack
       working-directory: ${{ matrix.project }}
       run: |
-        dotnet pack --configuration Release -p:PackageVersion=${{ steps.versionprovider.outputs.version }} -p:AssemblyVersion=${{ steps.versionprovider.outputs.version }} -p:PathMap="$GITHUB_WORKSPACE=/" -p:ContinuousIntegrationBuild=true
+        dotnet pack --configuration Release -p:PackageVersion=${{ needs.generate_version.outputs.version }} -p:AssemblyVersion=${{ needs.generate_version.outputs.version }} -p:PathMap="$GITHUB_WORKSPACE=/" -p:ContinuousIntegrationBuild=true
             
     - name: Find nupkg file
       id: nupkgvar
@@ -126,7 +84,7 @@ jobs:
       run: files=( *.nupkg) && echo ::set-output name=filename::$(echo "${files[0]}")
       
     - name: Upload nupkg - Upload asset
-      uses: actions/upload-artifact@v1.0.0
+      uses: actions/upload-artifact@v2
       with:
         name: ${{ steps.nupkgvar.outputs.filename }}
         path: ${{ matrix.project }}/bin/Release/${{ steps.nupkgvar.outputs.filename }}
@@ -137,7 +95,7 @@ jobs:
       run: files=( *.snupkg) && echo ::set-output name=filename::$(echo "${files[0]}")
       
     - name: Upload snupkg - Upload asset
-      uses: actions/upload-artifact@v1.0.0
+      uses: actions/upload-artifact@v2
       with:
         name: ${{ steps.snupkgvar.outputs.filename }}
         path: ${{ matrix.project }}/bin/Release/${{ steps.snupkgvar.outputs.filename }}
@@ -147,7 +105,7 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
-        upload_url: ${{ steps.create_draft.outputs.upload_url }} 
+        upload_url: ${{ needs.generate_release.outputs.upload_url }} 
         asset_path: ${{ matrix.project }}/bin/Release/${{ steps.nupkgvar.outputs.filename }}
         asset_name: ${{ steps.nupkgvar.outputs.filename }}
         asset_content_type: application/octet-stream
@@ -157,7 +115,7 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
-        upload_url: ${{ steps.create_draft.outputs.upload_url }} 
+        upload_url: ${{ needs.generate_release.outputs.upload_url }} 
         asset_path: ${{ matrix.project }}/bin/Release/${{ steps.snupkgvar.outputs.filename }}
         asset_name: ${{ steps.snupkgvar.outputs.filename }}
         asset_content_type: application/octet-stream
