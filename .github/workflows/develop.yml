@@ -27,7 +27,8 @@ jobs:
       
     steps:
     # The maximum value for either of the parts is 65534 - https://stackoverflow.com/a/37941296/11649486
-    - name: Generate version and save it to file
+    - name: Generate version
+      id: versionprovider
       shell: bash
       run: |
         echo "::set-output name=version::$(date -u +%Y.%m.%d.%k%M)"
