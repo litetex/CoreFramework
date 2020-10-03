@@ -23,11 +23,12 @@ jobs:
   generate_version:
     runs-on: ubuntu-latest
     outputs:
-      upload_url: ${{ steps.create_draft.outputs.upload_url }}
+      version: ${{ steps.versionprovider.outputs.version }}
     
     steps:
     # The maximum value for either of the parts is 65534 - https://stackoverflow.com/a/37941296/11649486
     - name: Generate version and save it to file
+      id: versionprovider
       shell: bash
       run: |
         echo "::set-output name=version::$(date -u +%Y.%m.%d.%k%M)"
