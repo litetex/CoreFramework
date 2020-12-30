@@ -73,6 +73,16 @@ jobs:
       with:
         tag_name: v${{ needs.generate_version.outputs.version }}
         release_name: v${{ needs.generate_version.outputs.version }}
+        body: |
+          ## Nuget-Downloads
+          | Module | Nuget | 
+          | ------ | -------------- | 
+          | Base | [![Nuget](https://img.shields.io/badge/nuget-${{ needs.generate_version.outputs.version }}-informational)](https://www.nuget.org/packages/Litetex.CoreFramework.Base/${{ needs.generate_version.outputs.package-version }})|
+          | Config | [![Nuget](https://img.shields.io/badge/nuget-${{ needs.generate_version.outputs.version }}-informational)](https://www.nuget.org/packages/Litetex.CoreFramework.Config/${{ needs.generate_version.outputs.package-version }})|
+          | Config.Json | [![Nuget](https://img.shields.io/badge/nuget-${{ needs.generate_version.outputs.version }}-informational)](https://www.nuget.org/packages/Litetex.CoreFramework.Config.Json/${{ needs.generate_version.outputs.package-version }})| 
+          | Config.Yaml | [![Nuget](https://img.shields.io/badge/nuget-${{ needs.generate_version.outputs.version }}-informational)](https://www.nuget.org/packages/Litetex.CoreFramework.Config.Yaml/${{ needs.generate_version.outputs.package-version }})| 
+          | Logging | [![Nuget](https://img.shields.io/badge/nuget-${{ needs.generate_version.outputs.version }}-informational)](https://www.nuget.org/packages/Litetex.CoreFramework.Logging/${{ needs.generate_version.outputs.package-version }})|
+          | CrashLogging | [![Nuget](https://img.shields.io/badge/nuget-${{ needs.generate_version.outputs.version }}-informational)](https://www.nuget.org/packages/Litetex.CoreFramework.CrashLogging/${{ needs.generate_version.outputs.package-version }})|
         draft: ${{ steps.genoptions.outputs.draft }}
         prerelease: ${{ steps.genoptions.outputs.prerelease }}
   
