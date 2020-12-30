@@ -1,8 +1,6 @@
 # CoreFramework <img src="CFR-128.png" width="48" /> [![Build](https://dev.azure.com/litetex/CoreFramework/_apis/build/status/Master?label=build%20)](https://dev.azure.com/litetex/CoreFramework/_build/latest?definitionId=6) [![Build nupkg](https://img.shields.io/github/workflow/status/litetex/CoreFramework/Master%20CI?label=build%20nupkg)](https://github.com/litetex/CoreFramework/actions?query=workflow%3A%22Master+CI%22) [![Latest Version](https://img.shields.io/github/v/release/litetex/CoreFramework?style=flat-square)](https://github.com/litetex/CoreFramework/releases)
 Things that are frequently used in code
 
-**Project status: maintenance mode** (bug fixes only).
-
 
 | Module | Nuget | Alternatives |
 | ------ | -------------- | --- |
