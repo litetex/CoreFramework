@@ -1,5 +1,5 @@
 # CoreFramework <img src="CFR-128.png" width="48" /> [![Build](https://dev.azure.com/litetex/CoreFramework/_apis/build/status/Master?label=build%20)](https://dev.azure.com/litetex/CoreFramework/_build/latest?definitionId=6) [![Build nupkg](https://img.shields.io/github/workflow/status/litetex/CoreFramework/Master%20CI?label=build%20nupkg)](https://github.com/litetex/CoreFramework/actions?query=workflow%3A%22Master+CI%22) [![Latest Version](https://img.shields.io/github/v/release/litetex/CoreFramework?style=flat-square)](https://github.com/litetex/CoreFramework/releases)
-Things that are frequently used in code
+Stuff that is frequently used in (my) code and therefore here summarized
 
 
 | Module | Nuget | Alternatives |
@@ -12,7 +12,12 @@ Things that are frequently used in code
 | CrashLogging | [![Nuget](https://img.shields.io/nuget/v/Litetex.CoreFramework.CrashLogging?style=flat-square)](https://www.nuget.org/packages/Litetex.CoreFramework.CrashLogging) | |
 
 
-## Development [![Build develop](https://dev.azure.com/litetex/CoreFramework/_apis/build/status/Develop?label=build%20develop)](https://dev.azure.com/litetex/CoreFramework/_build/latest?definitionId=4) [![Build develop nupkg](https://img.shields.io/github/workflow/status/litetex/CoreFramework/Develop%20CI?label=build%20develop%20nupkg)](https://github.com/litetex/CoreFramework/actions?query=workflow%3A%22Develop+CI%22)
+## Development 
+| Workflow | Status |
+| --- | --- |
+| Develop Build Azure | [![Build develop](https://dev.azure.com/litetex/CoreFramework/_apis/build/status/Develop?label=build%20develop)](https://dev.azure.com/litetex/CoreFramework/_build/latest?definitionId=4)  |
+| Check Build | [![Latest workflow runs](https://img.shields.io/github/workflow/status/litetex/CoreFramework/Check%20Build/develop)](https://github.com/litetex/CoreFramework/actions?query=workflow%3A%22Check+Build%22+branch%3Adevelop) |
+| Build Nuget | [![Latest workflow runs](https://img.shields.io/github/workflow/status/litetex/CoreFramework/Build%20Nuget/develop)](https://github.com/litetex/CoreFramework/actions?query=workflow%3A%22Build+Nuget%22+branch%3Adevelop) |
 
 
 | Module | Nuget (preview/dev) |
