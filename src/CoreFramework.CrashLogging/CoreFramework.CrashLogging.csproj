@@ -1,12 +1,10 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <TargetFrameworks>netstandard2.1;netcoreapp3.1</TargetFrameworks>
 
-    <RestorePackagesWithLockFile>true</RestorePackagesWithLockFile>
-
-    <PackageId>Litetex.CoreFramework.Config</PackageId>
-    <Description>Things that are frequently used in code - Configuration Module</Description>
+    <PackageId>Litetex.CoreFramework.CrashLogging</PackageId>
+    <Description>Things that are frequently used in code - CrashLogging Module</Description>
     <Authors>litetex</Authors>
     <PackageProjectUrl>https://github.com/litetex/CoreFramework</PackageProjectUrl>
     <Copyright>Copyright (c) 2020 litetex</Copyright>
@@ -26,11 +24,11 @@
 
   <ItemGroup>
     <!-- SourceLink -->
-    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0" PrivateAssets="All"/>
+    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0" PrivateAssets="All" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\CoreFramework.Base\CoreFramework.Base.csproj" />
+    <ProjectReference Include="..\CoreFramework.Logging\CoreFramework.Logging.csproj" />
   </ItemGroup>
 
   <ItemGroup>

@@ -24,7 +24,8 @@ namespace CoreFramework.Base.Util
          setInto(input);
       }
 
-      public void SetStringSecret(Func<string> getFrom, Action<string> setInto, string nameofSetPar) => SetString(getFrom, setInto, nameofSetPar, false);
+      public void SetStringSecret(Func<string> getFrom, Action<string> setInto, string nameofSetPar) 
+         => SetString(getFrom, setInto, nameofSetPar, false);
 
       public void SetEnum<E>(Func<string> getFrom, Action<E> setInto, string nameofSetPar) where E : struct, Enum
       {
@@ -68,5 +69,44 @@ namespace CoreFramework.Base.Util
          else
             FaultyLog?.Invoke($"{SetFaultyLog}: {nameofSetPar}='{input}' was set but couldn't be parsed to {nameof(Boolean)}");
       }
+
+      public void Set<T>(Func<T> getFrom, Action<T> setInto, string nameofSetPar, bool logInput = true)
+      {
+         T input = getFrom();
+
+         if (input == null)
+            return;
+
+         Log?.Invoke($"{SetLog}: {nameofSetPar}='{(logInput ? input.ToString() : "****")}'");
+         setInto(input);
+      }
+
+      public void SetArray<T>(Func<T[]> getFrom, Action<T[]> setInto, string nameofSetPar, bool logInput = true)
+      {
+         T[] input = getFrom();
+
+         if (input == null || input.Length == 0)
+            return;
+
+         Log?.Invoke($"{SetLog}: {nameofSetPar}='{(logInput ? string.Join(", ", input) : "****")}'");
+         setInto(input);
+      }
+
+      public void SetCollection<T>(Func<ICollection<T>> getFrom, Action<ICollection<T>> setInto, string nameofSetPar, bool logInput = true)
+      {
+         ICollection<T> input = getFrom();
+
+         if (input == null || input.Count == 0)
+            return;
+
+         Log?.Invoke($"{SetLog}: {nameofSetPar}='{(logInput ? string.Join(", ", input) : "****")}'");
+         setInto(input);
+      }
+
+      public void SetStringArray(Func<string[]> getFrom, Action<string[]> setInto, string nameofSetPar, bool logInput = true) 
+         => SetArray(getFrom, setInto, nameofSetPar, logInput);
+
+      public void SetStringCollection(Func<ICollection<string>> getFrom, Action<ICollection<string>> setInto, string nameofSetPar, bool logInput = true) 
+         => SetCollection(getFrom, setInto, nameofSetPar, logInput);
    }
 }

@@ -1,12 +1,10 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <TargetFrameworks>netstandard2.1;netcoreapp3.1</TargetFrameworks>
 
-    <RestorePackagesWithLockFile>true</RestorePackagesWithLockFile>
-
-    <PackageId>Litetex.CoreFramework.Logging</PackageId>
-    <Description>Things that are frequently used in code - Logging Module</Description>
+    <PackageId>Litetex.CoreFramework.Config.Yaml</PackageId>
+    <Description>Things that are frequently used in code - YAML Configuration Module</Description>
     <Authors>litetex</Authors>
     <PackageProjectUrl>https://github.com/litetex/CoreFramework</PackageProjectUrl>
     <Copyright>Copyright (c) 2020 litetex</Copyright>
@@ -24,20 +22,17 @@
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
   </PropertyGroup>
 
+  <!-- SourceLink -->
   <ItemGroup>
-    <!-- SourceLink -->
-    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0" PrivateAssets="All"/>
+    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0" PrivateAssets="All" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\CoreFramework.Base\CoreFramework.Base.csproj" />
+    <PackageReference Include="YamlDotNet" Version="9.1.0" />
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Serilog" Version="2.9.0" />
-    <PackageReference Include="Serilog.Enrichers.Thread" Version="3.1.0" />
-    <PackageReference Include="Serilog.Sinks.Console" Version="3.1.1" />
-    <PackageReference Include="Serilog.Sinks.File" Version="4.1.0" />
+    <ProjectReference Include="..\CoreFramework.Config\CoreFramework.Config.csproj" />
   </ItemGroup>
 
   <ItemGroup>

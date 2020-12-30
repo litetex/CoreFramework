@@ -24,9 +24,9 @@ namespace CoreFramework.Logging.Initalizer.Impl
 
       public string LogfilePath { get; protected set; }
 
-      public bool WritingToFile { get; protected set; } = false;
+      public bool CurrentlyWritingToFile { get; protected set; } = false;
 
-      public bool WritingToConsole { get; protected set; } = false;
+      public bool CurrentlyWritingToConsole { get; protected set; } = false;
 
       protected override void DoInitialization()
       {
@@ -34,7 +34,7 @@ namespace CoreFramework.Logging.Initalizer.Impl
          SetLogEventLevelToLoggerConfiguration(baseConf);
 
          // Console
-         if (Config.WriteConsole && !WritingToConsole)
+         if (Config.WriteConsole && !CurrentlyWritingToConsole)
             WriteConsoleInitInfo();
          if (Config.WriteConsole)
             DoWriteConsole(baseConf);
@@ -43,11 +43,18 @@ namespace CoreFramework.Logging.Initalizer.Impl
          if (Config.CreateLogFilePathOnStartup)
             LogfilePath ??= GetLogFilePath();
 
-         if (Config.WriteFile && !WritingToFile)
-            WriteFileInitInfo();
          if (Config.WriteFile)
          {
             LogfilePath ??= GetLogFilePath();
+
+            // Created parent folders
+            var parentFolder = Path.GetDirectoryName(Path.GetFullPath(LogfilePath));
+            if(!string.IsNullOrWhiteSpace(parentFolder))
+               Directory.CreateDirectory(parentFolder);
+
+            if (!CurrentlyWritingToFile)
+               WriteFileInitInfo();
+
             DoWriteFile(baseConf);
          }
 
@@ -59,8 +66,8 @@ namespace CoreFramework.Logging.Initalizer.Impl
          if(Config.FlushOnExit)
             AppDomain.CurrentDomain.ProcessExit += OnExit;
 
-         WritingToConsole = Config.WriteConsole;
-         WritingToFile = Config.WriteFile;
+         CurrentlyWritingToConsole = Config.WriteConsole;
+         CurrentlyWritingToFile = Config.WriteFile;
       }
 
       protected virtual LoggerConfiguration GetBaseLoggerConfig()
@@ -115,7 +122,7 @@ namespace CoreFramework.Logging.Initalizer.Impl
          else
             Log.Info("Reinitalized logging");
 
-         if (Config.WriteFile && !WritingToFile)
+         if (Config.WriteFile && !CurrentlyWritingToFile)
             Log.Info($"Logging to file: '{LogfilePath}'");
       }
 

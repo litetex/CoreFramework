@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Text;
 using System.Threading;
 
@@ -80,6 +81,80 @@ namespace CoreFramework.Base.IO
             onDeleted?.Invoke(path);
          }
          EnsureCreated(path);
+      }
+
+      /// <summary>
+      /// Copy a directory
+      /// </summary>
+      /// <param name="source"></param>
+      /// <param name="target"></param>
+      public static void Copy(string source, string target)
+      {
+         var sourceDI = new DirectoryInfo(source);
+         var targetDI = new DirectoryInfo(target);
+
+         Copy(sourceDI, targetDI);
+      }
+
+      /// <summary>
+      /// Copy a directory
+      /// </summary>
+      /// <param name="source"></param>
+      /// <param name="target"></param>
+      public static void Copy(DirectoryInfo source, DirectoryInfo target)
+      {
+         Directory.CreateDirectory(target.FullName);
+
+         // Copy each file into the new directory.
+         foreach (FileInfo fi in source.GetFiles())
+            fi.CopyTo(Path.Combine(target.FullName, fi.Name), true);
+
+         // Copy each subdirectory using recursion.
+         foreach (DirectoryInfo diSourceSubDir in source.GetDirectories())
+            Copy(diSourceSubDir, target.CreateSubdirectory(diSourceSubDir.Name));
+      }
+
+      /// <summary>
+      /// Similar to <see cref="Directory.Delete(string, bool)"/> but also deletes read-only files
+      /// </summary>
+      /// <param name="directory"></param>
+      public static void DeleteSafe(string directory)
+      {
+         foreach (string subdirectory in Directory.EnumerateDirectories(directory))
+            DeleteSafe(subdirectory);
+
+         foreach (string fileName in Directory.EnumerateFiles(directory))
+         {
+            var fileInfo = new FileInfo(fileName)
+            {
+               Attributes = FileAttributes.Normal
+            };
+            fileInfo.Delete();
+         }
+
+         //Something was not fast enough to delete, so let's wait a moment
+         if (Directory.EnumerateFiles(directory).Any())
+         {
+            Thread.Sleep(10);
+
+            //Again? - Wait a moment longer
+            if (Directory.EnumerateFiles(directory).Any())
+            {
+               Thread.Sleep(100);
+            }
+         }
+
+         int[] waitMs = new int[] { 10, 100, 1000, 5000 };
+         var waitStartIndex = 0;
+         while (Directory.EnumerateFiles(directory).Any() || Directory.EnumerateDirectories(directory).Any())
+         {
+            if (waitStartIndex > waitMs.Length - 1)
+               throw new TimeoutException($"Failed to delete '{directory}' in given time");
+            Thread.Sleep(waitMs[waitStartIndex]);
+            waitStartIndex++;
+         }
+
+         Directory.Delete(directory, true);
       }
    }
 }
