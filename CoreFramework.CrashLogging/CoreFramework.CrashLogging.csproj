@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <TargetFrameworks>netstandard2.1;netcoreapp3.1</TargetFrameworks>
 
     <PackageId>Litetex.CoreFramework.CrashLogging</PackageId>
     <Description>Things that are frequently used in code - CrashLogging Module</Description>
@@ -24,7 +24,7 @@
 
   <ItemGroup>
     <!-- SourceLink -->
-    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0" PrivateAssets="All"/>
+    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0" PrivateAssets="All" />
   </ItemGroup>
 
   <ItemGroup>
