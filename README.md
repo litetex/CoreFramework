@@ -1,4 +1,4 @@
-# CoreFramework <img src="CFR-128.png" width="48" /> [![Build nupkg](https://img.shields.io/github/workflow/status/litetex/CoreFramework/Master%20CI)](https://github.com/litetex/CoreFramework/actions?query=workflow%3A%22Master+CI%22) [![Latest Version](https://img.shields.io/github/v/release/litetex/CoreFramework?style=flat-square)](https://github.com/litetex/CoreFramework/releases)
+# CoreFramework <img src="CFR-128.png" width="48" /> [![Latest Version](https://img.shields.io/github/v/release/litetex/CoreFramework?style=flat-square)](https://github.com/litetex/CoreFramework/releases)
 Stuff that is frequently used in (my) code and therefore here summarized
 
 
@@ -15,9 +15,10 @@ Stuff that is frequently used in (my) code and therefore here summarized
 ## Development 
 | Workflow | Status |
 | --- | --- |
-| Sonar Build | [![Sonarcloud Status](https://sonarcloud.io/api/project_badges/measure?project=litetex_CoreFrameworkBase&metric=alert_status)](https://sonarcloud.io/dashboard?id=litetex_CoreFrameworkBase) <br/>[![Build develop](https://dev.azure.com/litetex/CoreFramework/_apis/build/status/Develop?label=build%20develop)](https://dev.azure.com/litetex/CoreFramework/_build/latest?definitionId=4) <br/> [![Build](https://dev.azure.com/litetex/CoreFramework/_apis/build/status/Master?label=build%20master)](https://dev.azure.com/litetex/CoreFramework/_build/latest?definitionId=6)  |
+| Sonar Build | [![Sonarcloud Status](https://sonarcloud.io/api/project_badges/measure?project=litetex_CoreFrameworkBase&metric=alert_status)](https://sonarcloud.io/dashboard?id=litetex_CoreFrameworkBase) <br>[![Build develop](https://dev.azure.com/litetex/CoreFramework/_apis/build/status/Develop?label=develop)](https://dev.azure.com/litetex/CoreFramework/_build/latest?definitionId=4) <br>[![Build](https://dev.azure.com/litetex/CoreFramework/_apis/build/status/Master?label=master)](https://dev.azure.com/litetex/CoreFramework/_build/latest?definitionId=6)  |
 | Check Build | [![Latest workflow runs](https://img.shields.io/github/workflow/status/litetex/CoreFramework/Check%20Build/develop)](https://github.com/litetex/CoreFramework/actions?query=workflow%3A%22Check+Build%22+branch%3Adevelop) |
 | Build Nuget | [![Latest workflow runs](https://img.shields.io/github/workflow/status/litetex/CoreFramework/Build%20Nuget/develop)](https://github.com/litetex/CoreFramework/actions?query=workflow%3A%22Build+Nuget%22+branch%3Adevelop) |
+| Release | [![master workflow runs](https://img.shields.io/github/workflow/status/litetex/CoreFramework/Release/master?label=master)](https://github.com/litetex/CoreFramework/actions?query=workflow%3A%22Release%22+branch%3Amaster) <br>[![master workflow runs](https://img.shields.io/github/workflow/status/litetex/CoreFramework/Release/master?label=release-test)](https://github.com/litetex/CoreFramework/actions?query=workflow%3A%22Release%22+branch%3Amaster-release-test) |
 
 
 | Module | Nuget (preview/dev) |
