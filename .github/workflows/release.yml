@@ -39,9 +39,9 @@ jobs:
         echo "::set-output name=version::$gen_version"
         
         echo "${{github.ref}}"
-        if [ "${{github.ref}}"="refs/heads/master-release-test" ]; then
+        if [ "${{github.ref}}" = "refs/heads/master-release-test" ]; then
           gen_package_version="${gen_version}-dev"
-        elif [ "${{github.ref}}"="refs/heads/master" ]; then
+        elif [ "${{github.ref}}" = "refs/heads/master" ]; then
           gen_package_version="${gen_version}"
         fi
         
@@ -58,10 +58,10 @@ jobs:
     - id: genoptions
       run: |
         echo "${{github.ref}}"
-        if [ "${{github.ref}}"="refs/heads/master-release-test" ]; then
+        if [ "${{github.ref}}" = "refs/heads/master-release-test" ]; then
           draft=false
           prerelease=true
-        elif [ "${{github.ref}}"="refs/heads/master" ]; then
+        elif [ "${{github.ref}}" = "refs/heads/master" ]; then
           draft=true
           prerelease=false
         fi
