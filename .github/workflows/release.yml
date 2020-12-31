@@ -71,7 +71,7 @@ jobs:
         echo "draft=$draft"
         echo "::set-output name=draft::$draft"
       
-    - name: Create Release (draft)
+    - name: Create Release
       id: create_draft
       uses: actions/create-release@v1
       env:
