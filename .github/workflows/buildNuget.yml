@@ -1,0 +1,78 @@
+name: Build Nuget
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [ develop ]
+    paths-ignore: 
+      - '**.md'
+  pull_request:
+    branches: [ master ]
+    paths-ignore: 
+      - '**.md'
+
+jobs: 
+  generate_version:
+    runs-on: ubuntu-latest
+    outputs:
+      version: ${{ steps.versionprovider.outputs.version }}
+      
+    steps:
+    # The maximum value for either of the parts is 65534 - https://stackoverflow.com/a/37941296/11649486
+    - name: Generate version
+      id: versionprovider
+      shell: bash
+      run: |
+        echo "::set-output name=version::$(date -u +%Y.%m.%d.%k%M)"
+        
+  build_each:
+    runs-on: ubuntu-latest
+    needs: [generate_version]
+    
+    strategy:
+      fail-fast: true
+      matrix:
+        project: 
+        - "CoreFramework.Base"
+        - "CoreFramework.Config"
+        - "CoreFramework.Config.Json" 
+        - "CoreFramework.Config.Yaml" 
+        - "CoreFramework.CrashLogging"
+        - "CoreFramework.Logging"
+        dotnet-version:
+        - 3.1.x
+    
+    steps:    
+    - uses: actions/checkout@v2
+
+    - name: Setup .NET Core
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: ${{ matrix.dotnet-version }}
+            
+    - name: Pack
+      working-directory: src/${{ matrix.project }}
+      run: |
+        dotnet pack --configuration Release -p:PackageVersion=${{ needs.generate_version.outputs.version }}-dev -p:AssemblyVersion=${{ needs.generate_version.outputs.version }} -p:PathMap="$GITHUB_WORKSPACE=/" -p:ContinuousIntegrationBuild=true
+            
+    - name: Find nupkg file
+      id: nupkgvar
+      working-directory: src/${{ matrix.project }}/bin/Release
+      run: files=( *.nupkg) && echo ::set-output name=filename::$(echo "${files[0]}")
+      
+    - name: Upload nupkg - Upload asset
+      uses: actions/upload-artifact@v2
+      with:
+        name: ${{ matrix.dotnet-version }}-${{ steps.nupkgvar.outputs.filename }}
+        path: src/${{ matrix.project }}/bin/Release/${{ steps.nupkgvar.outputs.filename }}
+        
+    - name: Find snupkg file
+      id: snupkgvar
+      working-directory: src/${{ matrix.project }}/bin/Release
+      run: files=( *.snupkg) && echo ::set-output name=filename::$(echo "${files[0]}")
+      
+    - name: Upload snupkg - Upload asset
+      uses: actions/upload-artifact@v2
+      with:
+        name: ${{ matrix.dotnet-version }}-${{ steps.snupkgvar.outputs.filename }}
+        path: src/${{ matrix.project }}/bin/Release/${{ steps.snupkgvar.outputs.filename }}
