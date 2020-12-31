@@ -35,14 +35,17 @@ jobs:
       # The maximum value for either of the parts is 65534 - https://stackoverflow.com/a/37941296/11649486
       run: |
         gen_version=$(date -u +%Y.%m.%d.%k%M)
+        echo "version=$gen_version"
         echo "::set-output name=version::$gen_version"
         
+        echo "${{github.ref}}"
         if [ "${{github.ref}}"="refs/heads/master-release-test" ]; then
           gen_package_version="${gen_version}-dev"
         elif [ "${{github.ref}}"="refs/heads/master" ]; then
           gen_package_version="${gen_version}"
         fi
-
+        
+        echo "packageversion=$gen_package_version"
         echo "::set-output name=packageversion::$gen_package_version"
   
   generate_release:
@@ -54,6 +57,7 @@ jobs:
     steps:
     - id: genoptions
       run: |
+        echo "${{github.ref}}"
         if [ "${{github.ref}}"="refs/heads/master-release-test" ]; then
           draft=false
           prerelease=true
@@ -62,7 +66,9 @@ jobs:
           prerelease=false
         fi
         
+        echo "prerelease=$prerelease"
         echo "::set-output name=prerelease::$prerelease"
+        echo "draft=$draft"
         echo "::set-output name=draft::$draft"
       
     - name: Create Release (draft)
