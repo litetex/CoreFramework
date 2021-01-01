@@ -88,12 +88,13 @@ namespace CoreFramework.Base.IO
       /// </summary>
       /// <param name="source"></param>
       /// <param name="target"></param>
-      public static void Copy(string source, string target)
+      /// <param name="overwrite">Overwrite already existing files; if false and duplicate file: Exception</param>
+      public static void Copy(string source, string target, bool overwrite = true)
       {
          var sourceDI = new DirectoryInfo(source);
          var targetDI = new DirectoryInfo(target);
 
-         Copy(sourceDI, targetDI);
+         Copy(sourceDI, targetDI, overwrite);
       }
 
       /// <summary>
@@ -101,17 +102,18 @@ namespace CoreFramework.Base.IO
       /// </summary>
       /// <param name="source"></param>
       /// <param name="target"></param>
-      public static void Copy(DirectoryInfo source, DirectoryInfo target)
+      /// <param name="overwrite">Overwrite already existing files; if false and duplicate file: Exception</param>
+      public static void Copy(DirectoryInfo source, DirectoryInfo target, bool overwrite = true)
       {
          Directory.CreateDirectory(target.FullName);
 
          // Copy each file into the new directory.
          foreach (FileInfo fi in source.GetFiles())
-            fi.CopyTo(Path.Combine(target.FullName, fi.Name), true);
+            fi.CopyTo(Path.Combine(target.FullName, fi.Name), overwrite);
 
          // Copy each subdirectory using recursion.
          foreach (DirectoryInfo diSourceSubDir in source.GetDirectories())
-            Copy(diSourceSubDir, target.CreateSubdirectory(diSourceSubDir.Name));
+            Copy(diSourceSubDir, target.CreateSubdirectory(diSourceSubDir.Name), overwrite);
       }
 
       /// <summary>
