@@ -13,6 +13,7 @@
     <RepositoryType>git</RepositoryType>
     <PackageIcon>icon.png</PackageIcon>
     <PackageIconUrl />
+    <PackageTags>Litetex;CoreFramework;Base</PackageTags>
     
     <!-- SourceLink -->
     <PublishRepositoryUrl>true</PublishRepositoryUrl>
@@ -25,7 +26,7 @@
 
   <ItemGroup>
     <!-- SourceLink -->
-    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0" PrivateAssets="All"/>
+    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0" PrivateAssets="All" />
   </ItemGroup>
 
   <ItemGroup>
