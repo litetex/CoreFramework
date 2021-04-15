@@ -27,8 +27,10 @@ jobs:
         with:
           dotnet-version: 5.0.x
 
-      # Fixes https://github.com/actions/setup-dotnet/issues/155
-      - run: dotnet nuget list source
+      # Fixes 
+      # - https://github.com/actions/setup-dotnet/issues/155
+      # - https://github.com/actions/virtual-environments/issues/1090
+      - run: dotnet nuget locals all --clear
 
       - uses: actions/checkout@v2
         with:
