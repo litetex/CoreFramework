@@ -7,7 +7,7 @@
     <Description>Things that are frequently used in code - YAML Configuration Module</Description>
     <Authors>litetex</Authors>
     <PackageProjectUrl>https://github.com/litetex/CoreFramework</PackageProjectUrl>
-    <Copyright>Copyright (c) 2020 litetex</Copyright>
+    <Copyright>Copyright (c) 2022 litetex</Copyright>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <RepositoryUrl>https://github.com/litetex/CoreFramework.git</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
