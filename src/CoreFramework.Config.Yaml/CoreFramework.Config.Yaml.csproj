@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>netstandard2.1;netcoreapp3.1</TargetFrameworks>
+    <TargetFrameworks>netstandard2.1;net6.0</TargetFrameworks>
 
     <PackageId>Litetex.CoreFramework.Config.Yaml</PackageId>
     <Description>Things that are frequently used in code - YAML Configuration Module</Description>
