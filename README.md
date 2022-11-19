@@ -1,5 +1,8 @@
 # CoreFramework <img src="CFR-128.png" width="48" /> [![Latest Version](https://img.shields.io/github/v/release/litetex/CoreFramework?style=flat-square)](https://github.com/litetex/CoreFramework/releases)
+_Current state: Maintenance mode_
+
 Stuff that is frequently used in (my) code and therefore here summarized
+
 
 <table>
   <thead>
