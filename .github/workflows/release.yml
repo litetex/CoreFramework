@@ -35,8 +35,7 @@ jobs:
       # The maximum value for either of the parts is 65534 - https://stackoverflow.com/a/37941296/11649486
       run: |
         gen_version=$(date -u +%Y.%m.%d.%k%M)
-        echo "version=$gen_version"
-        echo "::set-output name=version::$gen_version"
+        echo "version=$gen_version" >> $GITHUB_OUTPUT
         
         echo "${{github.ref}}"
         if [ "${{github.ref}}" = "refs/heads/master-release-test" ]; then
@@ -45,8 +44,7 @@ jobs:
           gen_package_version="${gen_version}"
         fi
         
-        echo "packageversion=$gen_package_version"
-        echo "::set-output name=packageversion::$gen_package_version"
+        echo "packageversion=$gen_package_version" >> $GITHUB_OUTPUT
   
   generate_release:
     runs-on: ubuntu-latest
@@ -66,10 +64,8 @@ jobs:
           prerelease=false
         fi
         
-        echo "prerelease=$prerelease"
-        echo "::set-output name=prerelease::$prerelease"
-        echo "draft=$draft"
-        echo "::set-output name=draft::$draft"
+        echo "prerelease=$prerelease" >> $GITHUB_OUTPUT
+        echo "draft=$draft" >> $GITHUB_OUTPUT
       
     - name: Create Release
       id: create_draft
@@ -123,7 +119,7 @@ jobs:
     - name: Find nupkg file
       id: nupkgvar
       working-directory: src/${{ matrix.project }}/bin/Release
-      run: files=( *.nupkg) && echo ::set-output name=filename::$(echo "${files[0]}")
+      run: files=( *.nupkg) && echo "filename=${files[0]}" >> $GITHUB_OUTPUT
       
     - name: Upload nupkg - Upload asset
       uses: actions/upload-artifact@v3
@@ -134,7 +130,7 @@ jobs:
     - name: Find snupkg file
       id: snupkgvar
       working-directory: src/${{ matrix.project }}/bin/Release
-      run: files=( *.snupkg) && echo ::set-output name=filename::$(echo "${files[0]}")
+      run: files=( *.snupkg) && echo "filename=${files[0]}" >> $GITHUB_OUTPUT
       
     - name: Upload snupkg - Upload asset
       uses: actions/upload-artifact@v3
