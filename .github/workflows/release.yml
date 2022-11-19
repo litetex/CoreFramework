@@ -11,12 +11,12 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v3
       
-    - name: Setup .NET Core
-      uses: actions/setup-dotnet@v1
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v3
       with:
-        dotnet-version: 3.1.x
+        dotnet-version: 6.x
       
     - name: Build
       run: dotnet build --configuration Release
@@ -35,8 +35,7 @@ jobs:
       # The maximum value for either of the parts is 65534 - https://stackoverflow.com/a/37941296/11649486
       run: |
         gen_version=$(date -u +%Y.%m.%d.%k%M)
-        echo "version=$gen_version"
-        echo "::set-output name=version::$gen_version"
+        echo "version=$gen_version" >> $GITHUB_OUTPUT
         
         echo "${{github.ref}}"
         if [ "${{github.ref}}" = "refs/heads/master-release-test" ]; then
@@ -45,8 +44,7 @@ jobs:
           gen_package_version="${gen_version}"
         fi
         
-        echo "packageversion=$gen_package_version"
-        echo "::set-output name=packageversion::$gen_package_version"
+        echo "packageversion=$gen_package_version" >> $GITHUB_OUTPUT
   
   generate_release:
     runs-on: ubuntu-latest
@@ -66,12 +64,10 @@ jobs:
           prerelease=false
         fi
         
-        echo "prerelease=$prerelease"
-        echo "::set-output name=prerelease::$prerelease"
-        echo "draft=$draft"
-        echo "::set-output name=draft::$draft"
+        echo "prerelease=$prerelease" >> $GITHUB_OUTPUT
+        echo "draft=$draft" >> $GITHUB_OUTPUT
       
-    - name: Create Release (draft)
+    - name: Create Release
       id: create_draft
       uses: actions/create-release@v1
       env:
@@ -108,12 +104,12 @@ jobs:
         - "CoreFramework.Logging"
     
     steps:    
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v3
       
-    - name: Setup .NET Core
-      uses: actions/setup-dotnet@v1
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v3
       with:
-        dotnet-version: 3.1.x
+        dotnet-version: 6.x
         
     - name: Pack
       working-directory: src/${{ matrix.project }}
@@ -123,10 +119,10 @@ jobs:
     - name: Find nupkg file
       id: nupkgvar
       working-directory: src/${{ matrix.project }}/bin/Release
-      run: files=( *.nupkg) && echo ::set-output name=filename::$(echo "${files[0]}")
+      run: files=( *.nupkg) && echo "filename=${files[0]}" >> $GITHUB_OUTPUT
       
     - name: Upload nupkg - Upload asset
-      uses: actions/upload-artifact@v2
+      uses: actions/upload-artifact@v3
       with:
         name: ${{ steps.nupkgvar.outputs.filename }}
         path: src/${{ matrix.project }}/bin/Release/${{ steps.nupkgvar.outputs.filename }}
@@ -134,10 +130,10 @@ jobs:
     - name: Find snupkg file
       id: snupkgvar
       working-directory: src/${{ matrix.project }}/bin/Release
-      run: files=( *.snupkg) && echo ::set-output name=filename::$(echo "${files[0]}")
+      run: files=( *.snupkg) && echo "filename=${files[0]}" >> $GITHUB_OUTPUT
       
     - name: Upload snupkg - Upload asset
-      uses: actions/upload-artifact@v2
+      uses: actions/upload-artifact@v3
       with:
         name: ${{ steps.snupkgvar.outputs.filename }}
         path: src/${{ matrix.project }}/bin/Release/${{ steps.snupkgvar.outputs.filename }}

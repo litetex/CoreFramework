@@ -1,18 +1,19 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>netstandard2.1;netcoreapp3.1</TargetFrameworks>
+    <TargetFrameworks>netstandard2.1;net6.0</TargetFrameworks>
 
     <PackageId>Litetex.CoreFramework.Config.Yaml</PackageId>
     <Description>Things that are frequently used in code - YAML Configuration Module</Description>
     <Authors>litetex</Authors>
     <PackageProjectUrl>https://github.com/litetex/CoreFramework</PackageProjectUrl>
-    <Copyright>Copyright (c) 2020 litetex</Copyright>
+    <Copyright>Copyright (c) 2022 litetex</Copyright>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <RepositoryUrl>https://github.com/litetex/CoreFramework.git</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <PackageIcon>icon.png</PackageIcon>
     <PackageIconUrl />
+    <PackageTags>Litetex;CoreFramework;Config;Yaml</PackageTags>
 
     <!-- SourceLink -->
     <PublishRepositoryUrl>true</PublishRepositoryUrl>
@@ -24,11 +25,11 @@
 
   <!-- SourceLink -->
   <ItemGroup>
-    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0" PrivateAssets="All" />
+    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.1.1" PrivateAssets="All" />
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="YamlDotNet" Version="9.1.0" />
+    <PackageReference Include="YamlDotNet" Version="12.0.2" />
   </ItemGroup>
 
   <ItemGroup>
