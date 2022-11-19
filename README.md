@@ -58,10 +58,7 @@ Stuff that is frequently used in (my) code and therefore here summarized
         </a>
       </td>
       <td>
-        <a href="https://github.com/aloneguid/config/blob/master/doc/Stores_JsonFile.md">Config.Net.Json</a>
-        <a href="https://www.nuget.org/packages/Config.Net.Json">
-          <img alt="Nuget" src="https://img.shields.io/nuget/v/Config.Net.Json">
-        </a>
+        <a href="https://github.com/aloneguid/config#json">Config.Net#JSON</a>
       </td>
     </tr>
     <tr>
