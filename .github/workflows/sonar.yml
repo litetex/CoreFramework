@@ -15,19 +15,21 @@ jobs:
   sonar:
     name: SonarCloud Scan
     runs-on: windows-latest
+    # Dependabot PRs have no access to secrets (SONAR_TOKEN) -> Ignore them
+    if: ${{ github.event_name != 'pull_request' || !(startsWith(github.head_ref, 'renovate/') || startsWith(github.head_ref, 'dependabot/')) }}
     steps:
-      - name: Set up JDK 11
+      - name: Set up JDK
         uses: actions/setup-java@v3
         with:
           distribution: 'temurin'
-          java-version: 11.x
+          java-version: 21.x
       
       - name: Setup .NET
         uses: actions/setup-dotnet@v3
         with:
           dotnet-version: 6.x
 
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
           fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
 
@@ -35,16 +37,16 @@ jobs:
         uses: actions/cache@v3
         with:
           path: ~\sonar\cache
-          key: ${{ runner.os }}-sonar-fix2
-          restore-keys: ${{ runner.os }}-sonar-fix2
+          key: ${{ runner.os }}-sonar
+          restore-keys: ${{ runner.os }}-sonar
 
       - name: Cache SonarCloud scanner
         id: cache-sonar-scanner
         uses: actions/cache@v3
         with:
           path: .\src\.sonar\scanner
-          key: ${{ runner.os }}-sonar-scanner-fix2
-          restore-keys: ${{ runner.os }}-sonar-scanner-fix2
+          key: ${{ runner.os }}-sonar-scanner
+          restore-keys: ${{ runner.os }}-sonar-scanner
 
       - name: Install SonarCloud scanner
         if: steps.cache-sonar-scanner.outputs.cache-hit != 'true'
