@@ -18,11 +18,11 @@ jobs:
     # Dependabot PRs have no access to secrets (SONAR_TOKEN) -> Ignore them
     if: ${{ github.event_name != 'pull_request' || !(startsWith(github.head_ref, 'renovate/') || startsWith(github.head_ref, 'dependabot/')) }}
     steps:
-      - name: Set up JDK 11
+      - name: Set up JDK
         uses: actions/setup-java@v3
         with:
           distribution: 'temurin'
-          java-version: 11.x
+          java-version: 21.x
       
       - name: Setup .NET
         uses: actions/setup-dotnet@v3
