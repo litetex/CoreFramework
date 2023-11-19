@@ -7,17 +7,18 @@
       "datasources": [
         "dotnet-version"
       ],
-      "allowedVersions": "<7"
+      "allowedVersions": "<9"
     },
     {
       "description": "Stick with .NET LTS",
       "matchPackagePatterns": [
+        "^Microsoft.SourceLink.GitHub",
         "^dotnet" 
       ],
       "datasources": [
         "nuget"
       ],
-      "allowedVersions": "<7"
+      "allowedVersions": "<9"
     }
   ]
 }
