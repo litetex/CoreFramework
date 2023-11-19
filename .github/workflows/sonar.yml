@@ -3,7 +3,7 @@ name: Sonar CI
 on:
   workflow_dispatch:
   push:
-    branches: [ master, develop ]
+    branches: [ dev ]
     paths-ignore: 
       - '**.md'
   pull_request:
