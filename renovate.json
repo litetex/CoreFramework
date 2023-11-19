@@ -12,6 +12,7 @@
     {
       "description": "Stick with .NET LTS",
       "matchPackagePatterns": [
+        "^Microsoft.SourceLink.GitHub",
         "^dotnet" 
       ],
       "datasources": [
