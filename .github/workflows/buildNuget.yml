@@ -40,7 +40,7 @@ jobs:
         - "CoreFramework.CrashLogging"
         - "CoreFramework.Logging"
         dotnet-version:
-        - 6.x
+        - 8.x
     
     steps:    
     - uses: actions/checkout@v4
