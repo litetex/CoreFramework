@@ -23,7 +23,7 @@ jobs:
       id: versionprovider
       shell: bash
       run: |
-        echo "version=$(date -u +%Y.%m.%d.%k%M)" >> $GITHUB_OUTPUT
+        echo "version=$(date -u +%Y.%m.%d.%-H%M)" >> $GITHUB_OUTPUT
         
   build_each:
     runs-on: ubuntu-latest
