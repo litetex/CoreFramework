@@ -61,7 +61,7 @@ jobs:
       run: files=( *.nupkg) && echo "filename=${files[0]}" >> $GITHUB_OUTPUT
       
     - name: Upload nupkg - Upload asset
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: ${{ matrix.dotnet-version }}-${{ steps.nupkgvar.outputs.filename }}
         path: src/${{ matrix.project }}/bin/Release/${{ steps.nupkgvar.outputs.filename }}
@@ -72,7 +72,7 @@ jobs:
       run: files=( *.snupkg) && echo "filename=${files[0]}" >> $GITHUB_OUTPUT
       
     - name: Upload snupkg - Upload asset
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: ${{ matrix.dotnet-version }}-${{ steps.snupkgvar.outputs.filename }}
         path: src/${{ matrix.project }}/bin/Release/${{ steps.snupkgvar.outputs.filename }}
