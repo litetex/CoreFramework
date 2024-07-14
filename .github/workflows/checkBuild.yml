@@ -3,13 +3,17 @@ name: Check Build
 on:
   workflow_dispatch:
   push:
-    branches: [ develop ]
+    branches: [ dev ]
     paths-ignore: 
       - '**.md'
   pull_request:
-    branches: [ develop ]
+    branches: [ dev ]
     paths-ignore: 
       - '**.md'
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
   build:
@@ -18,13 +22,13 @@ jobs:
       fail-fast: true
       matrix:
         dotnet-version:
-        - 6.x
+        - 8.x
 
     steps:
     - uses: actions/checkout@v4
       
     - name: Setup .NET
-      uses: actions/setup-dotnet@v3
+      uses: actions/setup-dotnet@v4
       with:
         dotnet-version: ${{ matrix.dotnet-version }}
       

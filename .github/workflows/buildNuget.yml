@@ -3,11 +3,11 @@ name: Build Nuget
 on:
   workflow_dispatch:
   push:
-    branches: [ develop ]
+    branches: [ dev ]
     paths-ignore: 
       - '**.md'
   pull_request:
-    branches: [ master ]
+    branches: [ dev ]
     paths-ignore: 
       - '**.md'
 
@@ -23,7 +23,7 @@ jobs:
       id: versionprovider
       shell: bash
       run: |
-        echo "version=$(date -u +%Y.%m.%d.%k%M)" >> $GITHUB_OUTPUT
+        echo "version=$(date -u +%Y.%m.%d.%-H%M)" >> $GITHUB_OUTPUT
         
   build_each:
     runs-on: ubuntu-latest
@@ -40,13 +40,13 @@ jobs:
         - "CoreFramework.CrashLogging"
         - "CoreFramework.Logging"
         dotnet-version:
-        - 6.x
+        - 8.x
     
     steps:    
     - uses: actions/checkout@v4
 
     - name: Setup .NET
-      uses: actions/setup-dotnet@v3
+      uses: actions/setup-dotnet@v4
       with:
         dotnet-version: ${{ matrix.dotnet-version }}
             
@@ -61,7 +61,7 @@ jobs:
       run: files=( *.nupkg) && echo "filename=${files[0]}" >> $GITHUB_OUTPUT
       
     - name: Upload nupkg - Upload asset
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: ${{ matrix.dotnet-version }}-${{ steps.nupkgvar.outputs.filename }}
         path: src/${{ matrix.project }}/bin/Release/${{ steps.nupkgvar.outputs.filename }}
@@ -72,7 +72,7 @@ jobs:
       run: files=( *.snupkg) && echo "filename=${files[0]}" >> $GITHUB_OUTPUT
       
     - name: Upload snupkg - Upload asset
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: ${{ matrix.dotnet-version }}-${{ steps.snupkgvar.outputs.filename }}
         path: src/${{ matrix.project }}/bin/Release/${{ steps.snupkgvar.outputs.filename }}
