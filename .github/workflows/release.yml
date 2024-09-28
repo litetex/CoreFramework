@@ -69,7 +69,7 @@ jobs:
       
     - name: Create Release
       id: create_draft
-      uses: actions/create-release@v1
+      uses: shogo82148/actions-create-release@v1
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
@@ -139,7 +139,7 @@ jobs:
         path: src/${{ matrix.project }}/bin/Release/${{ steps.snupkgvar.outputs.filename }}
 
     - name: Release - Upload nupkg
-      uses: actions/upload-release-asset@v1.0.2
+      uses: shogo82148/actions-upload-release-asset@v1
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
@@ -149,7 +149,7 @@ jobs:
         asset_content_type: application/octet-stream
         
     - name: Release - Upload snupkg
-      uses: actions/upload-release-asset@v1.0.2
+      uses: shogo82148/actions-upload-release-asset@v1
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
